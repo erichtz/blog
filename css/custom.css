@@ -1,0 +1,13 @@
+/* 修改标题样式 */
+#page-header #site-title,
+#page-header #site-subtitle{
+  text-align: left !important;
+  padding-left: 36px;
+}
+
+@media screen and (max-width: 768px) {
+    #page-header #site-title,
+    #page-header #site-subtitle {
+        padding-left: 16px;
+    }
+  }
