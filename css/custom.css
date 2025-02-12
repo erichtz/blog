@@ -13,23 +13,13 @@
   }
 
 
-/* 文章版权信息 夜间模式与字体设置 */
-[data-theme="dark"]
-  #post .post-copyright {
-    background-color: rgb(7 8 10);
-    text-shadow: #bfbeb8 1px 0 4px;
-  }
-[data-theme="dark"]
-  #post .post-copyright {
-    border: 1px solid rgb(19 18 18 / 35%);
-  }
-[data-theme="dark"]
-  .post-copyright-info {
-    color: #e0e0e4;
-  }
-#post .post-copyright__title{
-    font-size:22px;
+/* 修改头像显示样式 */
+.avatar-img img:hover {
+  -webkit-transform: none;
+  -moz-transform: none;
+  -o-transform: none;
+  -ms-transform: none;
+  transform: none;
 }
-#post .post-copyright__notice{
-    font-size:15px;
-}
+
+
