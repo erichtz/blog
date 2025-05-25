@@ -1,0 +1,159 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>C和C++中的易错点 | eric_zht</title><meta name="author" content="eric_zht"><meta name="copyright" content="eric_zht"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="一、”.”和”-&gt;”的区别 对于结构体指针，应该使用”-&gt;” 对于结构体，应该使用”.”‘  举例： 1234567891011121314struct Student &#123;    int age;    char name[20];&#125;;&#x2F;&#x2F; 定义结构体变量struct Student s;s.age &#x3D; 20;       &#x2F;&#x2F; 直接通过变量访问成员strcpy(s">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C和C++中的易错点">
+<meta property="og:url" content="http://example.com/2025/03/05/C%E5%92%8CC++%E4%B8%AD%E7%9A%84%E6%98%93%E9%94%99%E7%82%B9/index.html">
+<meta property="og:site_name" content="eric_zht">
+<meta property="og:description" content="一、”.”和”-&gt;”的区别 对于结构体指针，应该使用”-&gt;” 对于结构体，应该使用”.”‘  举例： 1234567891011121314struct Student &#123;    int age;    char name[20];&#125;;&#x2F;&#x2F; 定义结构体变量struct Student s;s.age &#x3D; 20;       &#x2F;&#x2F; 直接通过变量访问成员strcpy(s">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/image/icon.png">
+<meta property="article:published_time" content="2025-03-04T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-03-05T14:19:53.345Z">
+<meta property="article:author" content="eric_zht">
+<meta property="article:tag" content="C">
+<meta property="article:tag" content="C++">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/image/icon.png"><link rel="shortcut icon" href="/image/favicon.png"><link rel="canonical" href="http://example.com/2025/03/05/C%E5%92%8CC++%E4%B8%AD%E7%9A%84%E6%98%93%E9%94%99%E7%82%B9/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'C和C++中的易错点',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  isShuoshuo: false
+}</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/image/icon.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">11</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">eric_zht</span></a><a class="nav-page-title" href="/"><span class="site-name">C和C++中的易错点</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">C和C++中的易错点</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-03-04T16:00:00.000Z" title="发表于 2025-03-05 00:00:00">2025-03-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-03-05T14:19:53.345Z" title="更新于 2025-03-05 22:19:53">2025-03-05</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">98</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>1分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="一、”-”和”-”的区别"><a href="#一、”-”和”-”的区别" class="headerlink" title="一、”.”和”-&gt;”的区别"></a>一、”.”和”-&gt;”的区别</h1><ul>
+<li>对于结构体指针，应该使用”-&gt;”</li>
+<li>对于结构体，应该使用”.”‘</li>
+</ul>
+<p>举例：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Student</span> &#123;</span></span><br><span class="line">    <span class="type">int</span> age;</span><br><span class="line">    <span class="type">char</span> name[<span class="number">20</span>];</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义结构体变量</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Student</span> <span class="title">s</span>;</span></span><br><span class="line">s.age = <span class="number">20</span>;       <span class="comment">// 直接通过变量访问成员</span></span><br><span class="line"><span class="built_in">strcpy</span>(s.name, <span class="string">&quot;Alice&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Student</span> *<span class="title">ptr</span>;</span></span><br><span class="line">ptr = &amp;s;         <span class="comment">// ptr指向结构体变量s</span></span><br><span class="line">ptr-&gt;age = <span class="number">21</span>;    <span class="comment">// 通过指针访问成员</span></span><br><span class="line"><span class="comment">// 等价于 (*ptr).age = 21;</span></span><br></pre></td></tr></table></figure>
+
+
+
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/C/">C</a><a class="post-meta__tags" href="/tags/C/">C++</a></div><div class="post-share"><div class="social-share" data-image="/image/icon.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2025/04/11/javase%20%E5%BC%95%E5%85%A5%E3%80%81%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/" title="javase 引入、基本语法"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">javase 引入、基本语法</div></div><div class="info-2"><div class="info-item-1">一、引入JAVA语言特性简单性：不像c++支持多继承，无指针。底层由c++实现。 面向对象 可移植性：一次编译，到处运行。在win上编译后可以在Linux上运行。 ​					Java程序在Java虚拟机上运行，JVM : Java virtual machine ​					JDK ：Java开发工具包 多线程 健壮性：产生的垃圾是自动回收的，不需要像c++一样手动回收内存空间。 安全性 JAVA的加载与执行 注：.class文件是字节码文件，不是纯粹的二进制文件，否则操作系统就可以直接运行了。 编译：使用JDK中自带的javac.exe进行编译使用方法： 1javac java源文件的路径   一个源文件可能生成多个.class文件 .class文件生成后，删除.java文件不影响程序的运行，但最好不要删掉，以防后面要修改。  运行：使用java.exe运行使用方法： 磁盘上有一个A.class 1java A...</div></div></div></a><a class="pagination-related" href="/2025/02/28/Swin-Unet-%E5%A4%8D%E7%8E%B0%E8%AE%B0%E5%BD%95%EF%BC%88%E8%AE%B0%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%A4%8D%E7%8E%B0%EF%BC%89/" title="Swin-Unet 复现记录（记第一次复现）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">Swin-Unet 复现记录（记第一次复现）</div></div><div class="info-2"><div class="info-item-1">一、train中遇到的问题（一）python、pytorch、cuda版本不对应swin-unet官方仓库上写的使用的是python3.7运行的代码，所以我一开始把环境全部朝python3.7去配置。却一直报错。 经过一番搜索后，发现python3.7对应的环境无法在4060laptop上运行。 在多次尝试不同的环境，并结合b站复现别的论文的视频，选择将python版本改为3.8。 1、新建独立环境12conda create -n py.8 python=3.8  # 明确指定Python 3.8conda activate py.8  2、使用pip绕过conda依赖限制1pip install torch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1 --index-url...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/image/icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">eric_zht</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">11</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E2%80%9D-%E2%80%9D%E5%92%8C%E2%80%9D-%E2%80%9D%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">一、”.”和”-&gt;”的区别</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/04/25/javase%20%E6%95%B0%E7%BB%84/" title="javase 数组">javase 数组</a><time datetime="2025-04-24T16:00:00.000Z" title="发表于 2025-04-25 00:00:00">2025-04-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/04/13/javase%20%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" title="javase 面向对象">javase 面向对象</a><time datetime="2025-04-12T16:00:00.000Z" title="发表于 2025-04-13 00:00:00">2025-04-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/04/11/javase%20%E5%BC%95%E5%85%A5%E3%80%81%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/" title="javase 引入、基本语法">javase 引入、基本语法</a><time datetime="2025-04-10T16:00:00.000Z" title="发表于 2025-04-11 00:00:00">2025-04-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/05/C%E5%92%8CC++%E4%B8%AD%E7%9A%84%E6%98%93%E9%94%99%E7%82%B9/" title="C和C++中的易错点">C和C++中的易错点</a><time datetime="2025-03-04T16:00:00.000Z" title="发表于 2025-03-05 00:00:00">2025-03-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/02/28/Swin-Unet-%E5%A4%8D%E7%8E%B0%E8%AE%B0%E5%BD%95%EF%BC%88%E8%AE%B0%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%A4%8D%E7%8E%B0%EF%BC%89/" title="Swin-Unet 复现记录（记第一次复现）">Swin-Unet 复现记录（记第一次复现）</a><time datetime="2025-02-28T06:44:00.000Z" title="发表于 2025-02-28 14:44:00">2025-02-28</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2025 By eric_zht</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
