@@ -22,4 +22,17 @@
   transform: none;
 }
 
+body::before {
+
+    content: '';
+
+
+    background: url('https://pic.imgdb.cn/item/6741310cd29ded1a8c7a7799.jpg') no-repeat;
+
+
+    display: none;
+
+
+}
+
 

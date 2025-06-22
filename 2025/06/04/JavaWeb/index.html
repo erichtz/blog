@@ -1,0 +1,390 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>JDBC | eric_zht</title><meta name="author" content="eric_zht"><meta name="copyright" content="eric_zht"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="一、JSON 基础语法 二、Ajax - Axios发起异步请求Ajax作用：  数据交换：通过Ajax可以给服务器发送请求，并获取服务器响应的数据。 异步交互：可以在不重新加载整个页面的情况下，与服务器交换数据并更新部分网页，如：搜索联想、用户名是否可用的校验等。  AxiosAxios对原生的Ajax进行了封装，简化书写，快速开发。 使用步骤： 简化写法 Maven一款用于管理和构建java项">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JDBC">
+<meta property="og:url" content="http://example.com/2025/06/04/JavaWeb/index.html">
+<meta property="og:site_name" content="eric_zht">
+<meta property="og:description" content="一、JSON 基础语法 二、Ajax - Axios发起异步请求Ajax作用：  数据交换：通过Ajax可以给服务器发送请求，并获取服务器响应的数据。 异步交互：可以在不重新加载整个页面的情况下，与服务器交换数据并更新部分网页，如：搜索联想、用户名是否可用的校验等。  AxiosAxios对原生的Ajax进行了封装，简化书写，快速开发。 使用步骤： 简化写法 Maven一款用于管理和构建java项">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/image/icon.png">
+<meta property="article:published_time" content="2025-06-03T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-06-08T13:09:43.202Z">
+<meta property="article:author" content="eric_zht">
+<meta property="article:tag" content="JDBC">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/image/icon.png"><link rel="shortcut icon" href="/image/favicon.png"><link rel="canonical" href="http://example.com/2025/06/04/JavaWeb/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'JDBC',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  isShuoshuo: false
+}</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/image/icon.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">15</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">9</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">eric_zht</span></a><a class="nav-page-title" href="/"><span class="site-name">JDBC</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">JDBC</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-06-03T16:00:00.000Z" title="发表于 2025-06-04 00:00:00">2025-06-04</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-06-08T13:09:43.202Z" title="更新于 2025-06-08 21:09:43">2025-06-08</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">2.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>7分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="一、JSON-基础语法"><a href="#一、JSON-基础语法" class="headerlink" title="一、JSON 基础语法"></a>一、JSON 基础语法</h1><p><img src="https://pic.ericzht.space/PicGo/image-20250605165313724.png" alt="image-20250605165313724"></p>
+<h1 id="二、Ajax-Axios发起异步请求"><a href="#二、Ajax-Axios发起异步请求" class="headerlink" title="二、Ajax - Axios发起异步请求"></a>二、Ajax - Axios发起异步请求</h1><h2 id="Ajax"><a href="#Ajax" class="headerlink" title="Ajax"></a>Ajax</h2><p>作用：</p>
+<ul>
+<li>数据交换：通过Ajax可以给服务器发送请求，并获取服务器响应的数据。</li>
+<li>异步交互：可以在<strong>不重新加载整个页面</strong>的情况下，与服务器交换数据并<strong>更新部分网页</strong>，如：搜索联想、用户名是否可用的校验等。</li>
+</ul>
+<h2 id="Axios"><a href="#Axios" class="headerlink" title="Axios"></a>Axios</h2><p>Axios对原生的Ajax进行了封装，简化书写，快速开发。</p>
+<h3 id="使用步骤："><a href="#使用步骤：" class="headerlink" title="使用步骤："></a>使用步骤：</h3><p><img src="https://pic.ericzht.space/PicGo/image-20250605200523447.png" alt="image-20250605200523447"></p>
+<h3 id="简化写法"><a href="#简化写法" class="headerlink" title="简化写法"></a>简化写法</h3><p><img src="https://pic.ericzht.space/PicGo/image-20250605200944585.png" alt="image-20250605200944585"></p>
+<h1 id="Maven"><a href="#Maven" class="headerlink" title="Maven"></a>Maven</h1><p>一款用于管理和构建java项目的工具。</p>
+<ul>
+<li>依赖管理：方便的管理项目依赖的资源，避免版本冲突问题</li>
+<li>统一项目结构：提供标准、统一的项目结构</li>
+<li>项目构建：标准跨平台的自动化项目构建方式</li>
+</ul>
+<p>仓库：</p>
+<p><img src="https://pic.ericzht.space/PicGo/image-20250606142002180.png" alt="image-20250606142002180"></p>
+<h2 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h2><ul>
+<li><p>groupId：定义当前Maven项目隶属的组织名称（通常是域名反写，如space.ericzht）</p>
+</li>
+<li><p>artifactId：定义当前Maven项目名称</p>
+</li>
+<li><p>version：定义当前项目版本号</p>
+</li>
+</ul>
+<h2 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h2><p>Maven的生命周期是为了对所有的Maven项目构建过程进行抽象和统一。</p>
+<p>Maven中有3套相互独立的生命周期：</p>
+<ul>
+<li>clean：清理工作</li>
+<li>default：核心工作，如：编译、测试、打包、安装、部署等</li>
+<li>site：生成报告、发布站点等</li>
+</ul>
+<p><img src="https://pic.ericzht.space/PicGo/image-20250606155547521.png" alt="image-20250606155547521"></p>
+<p>需要了解的五个生命周期：</p>
+<p><img src="https://pic.ericzht.space/PicGo/image-20250606155629383.png" alt="image-20250606155629383"></p>
+<h3 id="test为什么日志无法显示结果？"><a href="#test为什么日志无法显示结果？" class="headerlink" title="test为什么日志无法显示结果？"></a>test为什么日志无法显示结果？</h3><p>test包里的Java文件必须以Test结尾,日志没显示出来是因为类名错误，找不到test的文件</p>
+<p><img src="https://pic.ericzht.space/PicGo/image-20250606162245333.png" alt="image-20250606162245333"></p>
+<h1 id="Spring"><a href="#Spring" class="headerlink" title="Spring"></a>Spring</h1><h2 id="SpringBoot"><a href="#SpringBoot" class="headerlink" title="SpringBoot"></a>SpringBoot</h2><p>快速便捷的Spring框架，基于SpringBoot可以快速构建Spring框架。</p>
+<h3 id="SpringBoot快速入门"><a href="#SpringBoot快速入门" class="headerlink" title="SpringBoot快速入门"></a>SpringBoot快速入门</h3><h4 id="新建模块"><a href="#新建模块" class="headerlink" title="新建模块"></a>新建模块</h4><p>依赖中要勾选Spring Web</p>
+<p><img src="https://pic.ericzht.space/PicGo/image-20250606165510502.png" alt="image-20250606165510502"></p>
+<h4 id="创建请求处理类-HelloController"><a href="#创建请求处理类-HelloController" class="headerlink" title="创建请求处理类 HelloController"></a>创建请求处理类 HelloController</h4><img src="https://pic.ericzht.space/PicGo/image-20250606165617238.png" alt="image-20250606165617238" style="zoom:200%;" />
+
+<h4 id="运行启动类，在浏览器中进行测试"><a href="#运行启动类，在浏览器中进行测试" class="headerlink" title="运行启动类，在浏览器中进行测试"></a>运行启动类，在浏览器中进行测试</h4><p><img src="https://pic.ericzht.space/PicGo/image-20250606165652006.png" alt="image-20250606165652006"></p>
+<h4 id="Tips：包被识别成文件夹怎么办？"><a href="#Tips：包被识别成文件夹怎么办？" class="headerlink" title="Tips：包被识别成文件夹怎么办？"></a>Tips：包被识别成文件夹怎么办？</h4><p>右键Java目录，选择标记目录为源根</p>
+<h1 id="HTTP协议"><a href="#HTTP协议" class="headerlink" title="HTTP协议"></a>HTTP协议</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>Hyper Text Tranfer Protocol 超文本传输协议</p>
+<p>特点：</p>
+<ol>
+<li>基于TCP协议：面向连接，安全</li>
+<li>基于请求-响应模型：一次请求对应一次响应</li>
+<li>HTTP协议是无状态的协议：对事务处理没有记忆能力。每次请求-响应都是独立的。<ol>
+<li>缺点：多次请求之间不能共享数据</li>
+<li>优点：速度快</li>
+</ol>
+</li>
+</ol>
+<h2 id="请求数据"><a href="#请求数据" class="headerlink" title="请求数据"></a>请求数据</h2><p><img src="https://pic.ericzht.space/PicGo/image-20250606190226500.png" alt="image-20250606190226500"></p>
+<h2 id="响应数据"><a href="#响应数据" class="headerlink" title="响应数据"></a>响应数据</h2><p><img src="https://pic.ericzht.space/PicGo/image-20250606190506831.png" alt="image-20250606190506831"></p>
+<p><img src="https://pic.ericzht.space/PicGo/image-20250606190525698.png" alt="image-20250606190525698"></p>
+<h3 id="状态码大类"><a href="#状态码大类" class="headerlink" title="状态码大类"></a>状态码大类</h3><table>
+<thead>
+<tr>
+<th>状态码分类</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1xx</td>
+<td><strong>响应中</strong>——临时状态码，表示请求已经接受，告诉客户端应该继续请求或者如果它已经完成则忽略它</td>
+</tr>
+<tr>
+<td>2xx</td>
+<td><strong>成功</strong>——表示请求已经被成功接收，处理已完成</td>
+</tr>
+<tr>
+<td>3xx</td>
+<td><strong>重定向</strong>——重定向到其它地方：它让客户端再发起一个请求以完成整个处理。</td>
+</tr>
+<tr>
+<td>4xx</td>
+<td><strong>客户端错误</strong>——处理发生错误，责任在客户端，如：客户端的请求一个不存在的资源，客户端未被授权，禁止访问等</td>
+</tr>
+<tr>
+<td>5xx</td>
+<td><strong>服务器端错误</strong>——处理发生错误，责任在服务端，如：服务端抛出异常，路由出错，HTTP版本不支持等</td>
+</tr>
+</tbody></table>
+<h3 id="常见的响应状态码"><a href="#常见的响应状态码" class="headerlink" title="常见的响应状态码"></a>常见的响应状态码</h3><table>
+<thead>
+<tr>
+<th>状态码</th>
+<th>英文描述</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&#x3D;&#x3D;200&#x3D;&#x3D;</td>
+<td><strong><code>OK</code></strong></td>
+<td>客户端请求成功，即<strong>处理成功</strong>，这是我们最想看到的状态码</td>
+</tr>
+<tr>
+<td>302</td>
+<td><strong><code>Found</code></strong></td>
+<td>指示所请求的资源已移动到由<code>Location</code>响应头给定的 URL，浏览器会自动重新访问到这个页面</td>
+</tr>
+<tr>
+<td>304</td>
+<td><strong><code>Not Modified</code></strong></td>
+<td>告诉客户端，你请求的资源至上次取得后，服务端并未更改，你直接用你本地缓存吧。隐式重定向</td>
+</tr>
+<tr>
+<td>400</td>
+<td><strong><code>Bad Request</code></strong></td>
+<td>客户端请求有<strong>语法错误</strong>，不能被服务器所理解</td>
+</tr>
+<tr>
+<td>403</td>
+<td><strong><code>Forbidden</code></strong></td>
+<td>服务器收到请求，但是<strong>拒绝提供服务</strong>，比如：没有权限访问相关资源</td>
+</tr>
+<tr>
+<td>&#x3D;&#x3D;404&#x3D;&#x3D;</td>
+<td><strong><code>Not Found</code></strong></td>
+<td><strong>请求资源不存在</strong>，一般是URL输入有误，或者网站资源被删除了</td>
+</tr>
+<tr>
+<td>405</td>
+<td><strong><code>Method Not Allowed</code></strong></td>
+<td>请求方式有误，比如应该用GET请求方式的资源，用了POST</td>
+</tr>
+<tr>
+<td>428</td>
+<td><strong><code>Precondition Required</code></strong></td>
+<td><strong>服务器要求有条件的请求</strong>，告诉客户端要想访问该资源，必须携带特定的请求头</td>
+</tr>
+<tr>
+<td>429</td>
+<td><strong><code>Too Many Requests</code></strong></td>
+<td>指示用户在给定时间内发送了<strong>太多请求</strong>（“限速”），配合 Retry-After(多长时间后可以请求)响应头一起使用</td>
+</tr>
+<tr>
+<td>431</td>
+<td><strong><code> Request Header Fields Too Large</code></strong></td>
+<td><strong>请求头太大</strong>，服务器不愿意处理请求，因为它的头部字段太大。请求可以在减少请求头域的大小后重新提交。</td>
+</tr>
+<tr>
+<td>&#x3D;&#x3D;500&#x3D;&#x3D;</td>
+<td><strong><code>Internal Server Error</code></strong></td>
+<td><strong>服务器发生不可预期的错误</strong>。服务器出异常了，赶紧看日志去吧</td>
+</tr>
+<tr>
+<td>503</td>
+<td><strong><code>Service Unavailable</code></strong></td>
+<td><strong>服务器尚未准备好处理请求</strong>，服务器刚刚启动，还未初始化好</td>
+</tr>
+</tbody></table>
+<p>状态码大全：<a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/chapter/13553">https://cloud.tencent.com/developer/chapter/13553</a> </p>
+<h1 id="Tomcat"><a href="#Tomcat" class="headerlink" title="Tomcat"></a>Tomcat</h1><h2 id="概述-1"><a href="#概述-1" class="headerlink" title="概述"></a>概述</h2><ul>
+<li>一个开源免费的轻量级Web服务器，支持Servlet&#x2F;JSP少量的JavaEE规范。</li>
+<li>JavaEE：Java企业版，指企业级开发的技术规范总和。</li>
+<li>Tomcat也被称为Web容器、Servlet容器。Servlet程序需要依赖于Tomcat才能运行</li>
+<li><strong>对HTTP协议操作进行了封装，简化web程序开发。</strong></li>
+</ul>
+<h1 id="请求"><a href="#请求" class="headerlink" title="请求"></a>请求</h1><p><img src="https://pic.ericzht.space/PicGo/image-20250606195235597.png" alt="image-20250606195235597"></p>
+<h2 id="Postman"><a href="#Postman" class="headerlink" title="Postman"></a>Postman</h2><p><em>在网页调试中，只能在地址栏添加内容，这是GET类型的请求，很难对POST类型的请求进行测试。于是出现了Postman插件。</em></p>
+<p>网页调试与发送网页HTTP请求的Chrome插件</p>
+<p><strong>常用于进行接口测试</strong></p>
+<h2 id="SpringBoot接受请求的方式（简单参数）"><a href="#SpringBoot接受请求的方式（简单参数）" class="headerlink" title="SpringBoot接受请求的方式（简单参数）"></a>SpringBoot接受请求的方式（简单参数）</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HelloController</span> &#123;</span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/simpleRequest&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">simpleRequest</span><span class="params">(String name, <span class="type">int</span> age)</span>&#123; <span class="comment">// 直接把请求需要传的参数写在函数的参数列表中，会自动进行类型转换，由String转换为你写的类型</span></span><br><span class="line">        System.out.println(name + <span class="string">&quot;:&quot;</span> + age);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;OK&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/simpleRequest&quot;)</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">simpleRequest</span><span class="params">(<span class="meta">@RequestParam(name = &quot;name&quot;)</span> String username, <span class="type">int</span> age)</span>&#123; <span class="comment">// 这里相当于给username添加了一个别名，叫name。到时候客户端发送请求的时候使用name进行请求。（不可以使用username）</span></span><br><span class="line">    System.out.println(username + <span class="string">&quot;:&quot;</span> + age);</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;OK&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>@RequestParam中的required属性默认为true，代表该请求参数必须传递，如果不传递则报错。如果这个参数是可选的，可以将required属性设置为false。</p>
+<h2 id="原始方式接受请求"><a href="#原始方式接受请求" class="headerlink" title="原始方式接受请求*"></a>原始方式接受请求*</h2><p><img src="https://pic.ericzht.space/PicGo/image-20250606202508767.png" alt="image-20250606202508767"></p>
+<h2 id="SpringBoot接受请求的方式（实体参数）"><a href="#SpringBoot接受请求的方式（实体参数）" class="headerlink" title="SpringBoot接受请求的方式（实体参数）"></a>SpringBoot接受请求的方式（实体参数）</h2><p>把所有参数封装到一个类中，获取时将参数全部放入类的对象中。</p>
+<h3 id="简单实体对象"><a href="#简单实体对象" class="headerlink" title="简单实体对象"></a>简单实体对象</h3><p><img src="https://pic.ericzht.space/PicGo/image-20250606204025726.png" alt="image-20250606204025726"></p>
+<h3 id="复杂实体对象"><a href="#复杂实体对象" class="headerlink" title="复杂实体对象"></a>复杂实体对象</h3><p><img src="https://pic.ericzht.space/PicGo/image-20250606204344296.png" alt="image-20250606204344296"></p>
+<p>注：<strong>这里要给类写toString方法</strong>，否则输出的是类的类似于地址的东西。</p>
+<h2 id="数组集合参数"><a href="#数组集合参数" class="headerlink" title="数组集合参数"></a>数组集合参数</h2><ul>
+<li><strong>数组参数</strong>：请求参数名与形参数组名称相同且请求参数为多个，定义数组类型参数即可接受参数</li>
+</ul>
+<p><img src="https://pic.ericzht.space/PicGo/image-20250606205405653.png" alt="image-20250606205405653"></p>
+<ul>
+<li>集合参数：需要使用 <strong>@RequestParam</strong> 绑定参数关系</li>
+</ul>
+<p><img src="https://pic.ericzht.space/PicGo/image-20250606205627455.png" alt="image-20250606205627455"></p>
+<h2 id="日期参数"><a href="#日期参数" class="headerlink" title="日期参数"></a>日期参数</h2><p><img src="https://pic.ericzht.space/PicGo/image-20250606205848573.png" alt="image-20250606205848573"></p>
+<h2 id="Json参数"><a href="#Json参数" class="headerlink" title="Json参数"></a>Json参数</h2><p><img src="https://pic.ericzht.space/PicGo/image-20250606210022823.png" alt="image-20250606210022823"></p>
+<h2 id="路径参数"><a href="#路径参数" class="headerlink" title="路径参数"></a>路径参数</h2><p><img src="https://pic.ericzht.space/PicGo/image-20250606210426747.png" alt="image-20250606210426747"></p>
+<h1 id="响应"><a href="#响应" class="headerlink" title="响应"></a>响应</h1><p><img src="https://pic.ericzht.space/PicGo/image-20250608103212451.png" alt="image-20250608103212451"></p>
+<p><img src="https://pic.ericzht.space/PicGo/image-20250608103235300.png" alt="image-20250608103235300"></p>
+<p>这样响应回去的数据是各式各样的，前后端开发成本高、不便管理、很难维护。</p>
+<p>—— <strong>于是设定一个统一响应的规范 Result</strong></p>
+<p><img src="https://pic.ericzht.space/PicGo/image-20250608103355909.png" alt="image-20250608103355909"></p>
+<h2 id="Springboot静态资源存放目录"><a href="#Springboot静态资源存放目录" class="headerlink" title="Springboot静态资源存放目录"></a>Springboot静态资源存放目录</h2><p><img src="https://pic.ericzht.space/PicGo/image-20250608111230352.png" alt="image-20250608111230352"></p>
+<h2 id="分层解耦"><a href="#分层解耦" class="headerlink" title="分层解耦"></a>分层解耦</h2><p>内聚：软件中各个功能模块内部的功能联系</p>
+<p>耦合：衡量软件中各个层&#x2F;模块之间的依赖、关联程度</p>
+<p>软件设计原则：<strong>高内聚低耦合</strong></p>
+<h3 id="三层架构"><a href="#三层架构" class="headerlink" title="三层架构"></a>三层架构</h3><p><img src="https://pic.ericzht.space/PicGo/image-20250608112139339.png" alt="image-20250608112139339"></p>
+<ul>
+<li>Controller：控制层，接收前端发送的请求，对请求进行处理，并响应数据。</li>
+<li>Service：业务逻辑层，处理具体的业务逻辑。</li>
+<li>Dao：数据访问层（Data Access Object）（持久层），负责数据访问操作，包括数据的增删改查。</li>
+</ul>
+<h3 id="分层解耦-1"><a href="#分层解耦-1" class="headerlink" title="分层解耦"></a>分层解耦</h3><p><img src="https://pic.ericzht.space/PicGo/image-20250608113732272.png" alt="image-20250608113732272"></p>
+<p>上图这种架构，如果ServiceA要改为ServiceB，那么不仅要修改Service层的代码，还要修改Controller层的代码，Service层和Controller层耦合度较高，不利于后续开发。</p>
+<p>于是Spring提出了<strong>控制反转</strong>与<strong>依赖注入</strong>。</p>
+<p><img src="https://pic.ericzht.space/PicGo/image-20250608114114382.png" alt="image-20250608114114382"></p>
+<h4 id="控制反转"><a href="#控制反转" class="headerlink" title="控制反转"></a>控制反转</h4><p>Inversion Of Control，IOC</p>
+<p>对象的创建控制权由程序自身转移到外部（容器）</p>
+<h4 id="依赖注入"><a href="#依赖注入" class="headerlink" title="依赖注入"></a>依赖注入</h4><p>Dependency Injection，DI</p>
+<p>容器为应用程序提供运行时所依赖的资源</p>
+<h4 id="Bean对象"><a href="#Bean对象" class="headerlink" title="Bean对象"></a>Bean对象</h4><p>IOC容器中创建、管理的对象</p>
+<h4 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h4><h5 id="只有单个bean"><a href="#只有单个bean" class="headerlink" title="只有单个bean"></a>只有单个bean</h5><ol>
+<li>将Service层及Dao层的实现类交给IOC容器管理。 添加注解 <strong>@Component</strong></li>
+<li>为Controller及Service注入运行时依赖的对象。添加注解 <strong>@Autowired</strong></li>
+</ol>
+<p>​		程序在运行时会自动为他们提供所注解的对象</p>
+<p>如果要切换Service层的内容，直接将原来的Service层的@Component注解注释掉给新的添加注释就好了。</p>
+<p><img src="https://pic.ericzht.space/PicGo/image-20250608182415261.png" alt="image-20250608182415261"></p>
+<p><img src="https://pic.ericzht.space/PicGo/image-20250608200511626.png" alt="image-20250608200511626"></p>
+<h5 id="同时有多个bean"><a href="#同时有多个bean" class="headerlink" title="同时有多个bean"></a>同时有多个bean</h5><p>@Autowired 默认是按照<strong>类型</strong>进行的，如果存在多个相同的bean，会报错。</p>
+<p><strong>解决方法：</strong></p>
+<ol>
+<li>在想要执行的<strong>类</strong>的注解上加上**@Primary**注解设置其为高优先级。</li>
+<li>@Autowired + @Qualifier(“bean的名称”)</li>
+<li>@Resource(name&#x3D;”bean的名称”)</li>
+</ol>
+<p><strong>区别：</strong></p>
+<ul>
+<li>@Autowired 是spring框架提供的注解，而@Resource是JDK提供的注解</li>
+<li>@AUtowired 默认是按照类型注入，而@Resource默认是按照名称注入</li>
+</ul>
+<p><img src="https://pic.ericzht.space/PicGo/image-20250608203209548.png" alt="image-20250608203209548"></p>
+<h4 id="Bean组件扫描"><a href="#Bean组件扫描" class="headerlink" title="Bean组件扫描"></a>Bean组件扫描</h4><ul>
+<li><p>前面声明bean的四大注解，要想生效，还需要被组件扫描注解**@ComponentScan**扫描</p>
+</li>
+<li><p>启动类声明的注解**@SpringBootApplication**中，默认扫描的范围是启动类所在包及其子包</p>
+<p>如果在别的地方添加了组件，并且想要被扫描，就要使用 <strong>@ComponentScan(“包名”)</strong> 来显式配置，并且需要加上启动类所在的包名。</p>
+</li>
+</ul>
+<h1 id="MyBatis"><a href="#MyBatis" class="headerlink" title="MyBatis"></a>MyBatis</h1><p>是一款优秀的持久层（dao层），用于简化JDBC的开发</p>
+<h2 id="快速入门"><a href="#快速入门" class="headerlink" title="快速入门"></a>快速入门</h2><p><img src="https://pic.ericzht.space/PicGo/image-20250608210939248.png" alt="image-20250608210939248"></p>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/JDBC/">JDBC</a></div><div class="post-share"><div class="social-share" data-image="/image/icon.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2025/06/04/JDBC/" title="JDBC"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">JDBC</div></div><div class="info-2"><div class="info-item-1">一、概述Java DataBase Connectivity ： Java 数据库连接 Java语言操作关系型数据库的一套规则（接口），各个数据库厂商去实现这套接口，提供数据库驱动jar包。真正执行的代码是驱动包中的实现类。 JDBC的好处：各数据库使用相同的接口，Java代码不需要针对不同数据库分别开发。可随时替换底层数据库，访问数据库的Java代码基本不变。  二、DriverManager注册驱动1Class.forName(&quot;com.mysql.jdbc.Driver&quot;);  Driver类源码中含有静态代码块，静态代码块中直接就初始化驱动对象了。  注：MySQL5之后的驱动包，可以省略注册驱动这一步。 获取连接 参数：  Connection获取执行SQL的statement对象普通执行SQL对象Statement createStatement() 预编译SQL的执行SQL对象：防止SQL注入PreparedStatement prepareStatement(sql) 执行存储过程的对象CallableStatement...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2025/06/04/JDBC/" title="JDBC"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-06-04</div><div class="info-item-2">JDBC</div></div><div class="info-2"><div class="info-item-1">一、概述Java DataBase Connectivity ： Java 数据库连接 Java语言操作关系型数据库的一套规则（接口），各个数据库厂商去实现这套接口，提供数据库驱动jar包。真正执行的代码是驱动包中的实现类。 JDBC的好处：各数据库使用相同的接口，Java代码不需要针对不同数据库分别开发。可随时替换底层数据库，访问数据库的Java代码基本不变。  二、DriverManager注册驱动1Class.forName(&quot;com.mysql.jdbc.Driver&quot;);  Driver类源码中含有静态代码块，静态代码块中直接就初始化驱动对象了。  注：MySQL5之后的驱动包，可以省略注册驱动这一步。 获取连接 参数：  Connection获取执行SQL的statement对象普通执行SQL对象Statement createStatement() 预编译SQL的执行SQL对象：防止SQL注入PreparedStatement prepareStatement(sql) 执行存储过程的对象CallableStatement...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/image/icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">eric_zht</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">15</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">9</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81JSON-%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95"><span class="toc-text">一、JSON 基础语法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81Ajax-Axios%E5%8F%91%E8%B5%B7%E5%BC%82%E6%AD%A5%E8%AF%B7%E6%B1%82"><span class="toc-text">二、Ajax - Axios发起异步请求</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Ajax"><span class="toc-text">Ajax</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Axios"><span class="toc-text">Axios</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%AD%A5%E9%AA%A4%EF%BC%9A"><span class="toc-text">使用步骤：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E5%8C%96%E5%86%99%E6%B3%95"><span class="toc-text">简化写法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Maven"><span class="toc-text">Maven</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA"><span class="toc-text">创建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-text">生命周期</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#test%E4%B8%BA%E4%BB%80%E4%B9%88%E6%97%A5%E5%BF%97%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E7%BB%93%E6%9E%9C%EF%BC%9F"><span class="toc-text">test为什么日志无法显示结果？</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Spring"><span class="toc-text">Spring</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SpringBoot"><span class="toc-text">SpringBoot</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SpringBoot%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8"><span class="toc-text">SpringBoot快速入门</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B0%E5%BB%BA%E6%A8%A1%E5%9D%97"><span class="toc-text">新建模块</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E8%AF%B7%E6%B1%82%E5%A4%84%E7%90%86%E7%B1%BB-HelloController"><span class="toc-text">创建请求处理类 HelloController</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E5%90%AF%E5%8A%A8%E7%B1%BB%EF%BC%8C%E5%9C%A8%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%AD%E8%BF%9B%E8%A1%8C%E6%B5%8B%E8%AF%95"><span class="toc-text">运行启动类，在浏览器中进行测试</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Tips%EF%BC%9A%E5%8C%85%E8%A2%AB%E8%AF%86%E5%88%AB%E6%88%90%E6%96%87%E4%BB%B6%E5%A4%B9%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F"><span class="toc-text">Tips：包被识别成文件夹怎么办？</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HTTP%E5%8D%8F%E8%AE%AE"><span class="toc-text">HTTP协议</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E6%95%B0%E6%8D%AE"><span class="toc-text">请求数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%93%8D%E5%BA%94%E6%95%B0%E6%8D%AE"><span class="toc-text">响应数据</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8A%B6%E6%80%81%E7%A0%81%E5%A4%A7%E7%B1%BB"><span class="toc-text">状态码大类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E5%93%8D%E5%BA%94%E7%8A%B6%E6%80%81%E7%A0%81"><span class="toc-text">常见的响应状态码</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Tomcat"><span class="toc-text">Tomcat</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0-1"><span class="toc-text">概述</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82"><span class="toc-text">请求</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Postman"><span class="toc-text">Postman</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SpringBoot%E6%8E%A5%E5%8F%97%E8%AF%B7%E6%B1%82%E7%9A%84%E6%96%B9%E5%BC%8F%EF%BC%88%E7%AE%80%E5%8D%95%E5%8F%82%E6%95%B0%EF%BC%89"><span class="toc-text">SpringBoot接受请求的方式（简单参数）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E5%A7%8B%E6%96%B9%E5%BC%8F%E6%8E%A5%E5%8F%97%E8%AF%B7%E6%B1%82"><span class="toc-text">原始方式接受请求*</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SpringBoot%E6%8E%A5%E5%8F%97%E8%AF%B7%E6%B1%82%E7%9A%84%E6%96%B9%E5%BC%8F%EF%BC%88%E5%AE%9E%E4%BD%93%E5%8F%82%E6%95%B0%EF%BC%89"><span class="toc-text">SpringBoot接受请求的方式（实体参数）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E5%AE%9E%E4%BD%93%E5%AF%B9%E8%B1%A1"><span class="toc-text">简单实体对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%8D%E6%9D%82%E5%AE%9E%E4%BD%93%E5%AF%B9%E8%B1%A1"><span class="toc-text">复杂实体对象</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E9%9B%86%E5%90%88%E5%8F%82%E6%95%B0"><span class="toc-text">数组集合参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A5%E6%9C%9F%E5%8F%82%E6%95%B0"><span class="toc-text">日期参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Json%E5%8F%82%E6%95%B0"><span class="toc-text">Json参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%AF%E5%BE%84%E5%8F%82%E6%95%B0"><span class="toc-text">路径参数</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%93%8D%E5%BA%94"><span class="toc-text">响应</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Springboot%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E5%AD%98%E6%94%BE%E7%9B%AE%E5%BD%95"><span class="toc-text">Springboot静态资源存放目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E5%B1%82%E8%A7%A3%E8%80%A6"><span class="toc-text">分层解耦</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E5%B1%82%E6%9E%B6%E6%9E%84"><span class="toc-text">三层架构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E5%B1%82%E8%A7%A3%E8%80%A6-1"><span class="toc-text">分层解耦</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6%E5%8F%8D%E8%BD%AC"><span class="toc-text">控制反转</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5"><span class="toc-text">依赖注入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Bean%E5%AF%B9%E8%B1%A1"><span class="toc-text">Bean对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A4"><span class="toc-text">步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8F%AA%E6%9C%89%E5%8D%95%E4%B8%AAbean"><span class="toc-text">只有单个bean</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%90%8C%E6%97%B6%E6%9C%89%E5%A4%9A%E4%B8%AAbean"><span class="toc-text">同时有多个bean</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Bean%E7%BB%84%E4%BB%B6%E6%89%AB%E6%8F%8F"><span class="toc-text">Bean组件扫描</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MyBatis"><span class="toc-text">MyBatis</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8"><span class="toc-text">快速入门</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/06/04/JavaWeb/" title="JDBC">JDBC</a><time datetime="2025-06-03T16:00:00.000Z" title="发表于 2025-06-04 00:00:00">2025-06-04</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/06/04/JDBC/" title="JDBC">JDBC</a><time datetime="2025-06-03T16:00:00.000Z" title="发表于 2025-06-04 00:00:00">2025-06-04</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/06/02/mysql%E9%AB%98%E7%BA%A7/" title="mysql 高级">mysql 高级</a><time datetime="2025-06-01T16:00:00.000Z" title="发表于 2025-06-02 00:00:00">2025-06-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/05/25/mysql%E5%88%9D%E7%BA%A7/" title="mysql 初级">mysql 初级</a><time datetime="2025-05-24T16:00:00.000Z" title="发表于 2025-05-25 00:00:00">2025-05-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/04/25/javase%20%E6%95%B0%E7%BB%84/" title="javase 数组">javase 数组</a><time datetime="2025-04-24T16:00:00.000Z" title="发表于 2025-04-25 00:00:00">2025-04-25</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2025 By eric_zht</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

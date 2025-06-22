@@ -1,0 +1,209 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>JDBC | eric_zht</title><meta name="author" content="eric_zht"><meta name="copyright" content="eric_zht"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="一、概述Java DataBase Connectivity ： Java 数据库连接 Java语言操作关系型数据库的一套规则（接口），各个数据库厂商去实现这套接口，提供数据库驱动jar包。真正执行的代码是驱动包中的实现类。 JDBC的好处：各数据库使用相同的接口，Java代码不需要针对不同数据库分别开发。可随时替换底层数据库，访问数据库的Java代码基本不变。  二、DriverManager注">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JDBC">
+<meta property="og:url" content="http://example.com/2025/06/04/JDBC/index.html">
+<meta property="og:site_name" content="eric_zht">
+<meta property="og:description" content="一、概述Java DataBase Connectivity ： Java 数据库连接 Java语言操作关系型数据库的一套规则（接口），各个数据库厂商去实现这套接口，提供数据库驱动jar包。真正执行的代码是驱动包中的实现类。 JDBC的好处：各数据库使用相同的接口，Java代码不需要针对不同数据库分别开发。可随时替换底层数据库，访问数据库的Java代码基本不变。  二、DriverManager注">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/image/icon.png">
+<meta property="article:published_time" content="2025-06-03T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-06-05T03:08:12.731Z">
+<meta property="article:author" content="eric_zht">
+<meta property="article:tag" content="JDBC">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/image/icon.png"><link rel="shortcut icon" href="/image/favicon.png"><link rel="canonical" href="http://example.com/2025/06/04/JDBC/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'JDBC',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  isShuoshuo: false
+}</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/image/icon.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">15</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">9</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">eric_zht</span></a><a class="nav-page-title" href="/"><span class="site-name">JDBC</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">JDBC</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-06-03T16:00:00.000Z" title="发表于 2025-06-04 00:00:00">2025-06-04</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-06-05T03:08:12.731Z" title="更新于 2025-06-05 11:08:12">2025-06-05</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">654</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>2分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="一、概述"><a href="#一、概述" class="headerlink" title="一、概述"></a>一、概述</h1><p>Java DataBase Connectivity ： Java 数据库连接</p>
+<p>Java语言操作关系型数据库的一套规则（接口），各个数据库厂商去实现这套接口，提供数据库驱动jar包。真正执行的代码是驱动包中的实现类。</p>
+<p><strong>JDBC的好处</strong>：各数据库使用相同的接口，Java代码不需要针对不同数据库分别开发。可随时替换底层数据库，访问数据库的Java代码基本不变。</p>
+<p><img src="https://pic.ericzht.space/PicGo/image-20250604180208916.png" alt="image-20250604180208916"></p>
+<h1 id="二、DriverManager"><a href="#二、DriverManager" class="headerlink" title="二、DriverManager"></a>二、DriverManager</h1><h2 id="注册驱动"><a href="#注册驱动" class="headerlink" title="注册驱动"></a>注册驱动</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Class.forName(<span class="string">&quot;com.mysql.jdbc.Driver&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>Driver类源码中含有静态代码块，静态代码块中直接就初始化驱动对象了。</p>
+<p><img src="https://pic.ericzht.space/PicGo/image-20250604180515890.png" alt="image-20250604180515890"></p>
+<p><strong>注：MySQL5之后的驱动包，可以省略注册驱动这一步。</strong></p>
+<h2 id="获取连接"><a href="#获取连接" class="headerlink" title="获取连接"></a>获取连接</h2><p><img src="https://pic.ericzht.space/PicGo/image-20250604180625615.png" alt="image-20250604180625615"></p>
+<p>参数：</p>
+<p><img src="https://pic.ericzht.space/PicGo/image-20250604180716163.png" alt="image-20250604180716163"></p>
+<h1 id="Connection"><a href="#Connection" class="headerlink" title="Connection"></a>Connection</h1><h2 id="获取执行SQL的statement对象"><a href="#获取执行SQL的statement对象" class="headerlink" title="获取执行SQL的statement对象"></a>获取执行SQL的statement对象</h2><h3 id="普通执行SQL对象"><a href="#普通执行SQL对象" class="headerlink" title="普通执行SQL对象"></a>普通执行SQL对象</h3><p><code>Statement createStatement()</code></p>
+<h3 id="预编译SQL的执行SQL对象：防止SQL注入"><a href="#预编译SQL的执行SQL对象：防止SQL注入" class="headerlink" title="预编译SQL的执行SQL对象：防止SQL注入"></a>预编译SQL的执行SQL对象：防止SQL注入</h3><p><code>PreparedStatement prepareStatement(sql)</code></p>
+<h3 id="执行存储过程的对象"><a href="#执行存储过程的对象" class="headerlink" title="执行存储过程的对象"></a>执行存储过程的对象</h3><p><code>CallableStatement prepareCall(sql)</code></p>
+<h2 id="事务管理"><a href="#事务管理" class="headerlink" title="事务管理"></a>事务管理</h2><p><img src="https://pic.ericzht.space/PicGo/image-20250604201815068.png" alt="image-20250604201815068"></p>
+<h1 id="Statement"><a href="#Statement" class="headerlink" title="Statement"></a>Statement</h1><h2 id="执行SQL语句"><a href="#执行SQL语句" class="headerlink" title="执行SQL语句"></a>执行SQL语句</h2><p><img src="https://pic.ericzht.space/PicGo/image-20250604202510748.png" alt="image-20250604202510748"></p>
+<h1 id="ResultSet"><a href="#ResultSet" class="headerlink" title="ResultSet"></a>ResultSet</h1><h2 id="封装DQL查询语句的结果"><a href="#封装DQL查询语句的结果" class="headerlink" title="封装DQL查询语句的结果"></a>封装DQL查询语句的结果</h2><p>获取查询结果：</p>
+<p><img src="https://pic.ericzht.space/PicGo/image-20250604203052565.png" alt="image-20250604203052565"></p>
+<h1 id="PreparedStatement"><a href="#PreparedStatement" class="headerlink" title="PreparedStatement"></a>PreparedStatement</h1><p>继承自Statement类，预编译SQL语句并执行，预防SQL注入问题。</p>
+<p>SQL注入：通过操作输入来修改事先定义好的SQL语句，以达到执行代码对服务器进行攻击的方法。</p>
+<p><img src="https://pic.ericzht.space/PicGo/image-20250604210753344.png" alt="image-20250604210753344"></p>
+<ul>
+<li><strong>防止SQL注入：</strong>它相当于把你输入的<strong>敏感标点</strong>前加入<code>转义字符\</code>，使得整体看成文本，而不会和代码进行结合，避免你输入的内容改变了代码的原义。</li>
+<li><strong>预编译SQL</strong>：可提升性能。开启此功能需要设置参数<code>useServerPrepStms=true</code></li>
+</ul>
+<p><img src="https://pic.ericzht.space/PicGo/image-20250604212605408.png" alt="image-20250604212605408"></p>
+<h1 id="数据库连接池"><a href="#数据库连接池" class="headerlink" title="数据库连接池"></a>数据库连接池</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>数据库连接池是个容器，负责分配、管理数据库连接（Connection）。</p>
+<p>它允许应用程序重复使用一个现有的数据库连接，而不是再重新建立一个。</p>
+<p>释放<em>空闲时间超过最大空闲时间的数据库连接</em>来避免因为没有释放数据库连接而引起的数据库连接遗漏</p>
+<p>好处：</p>
+<ul>
+<li>资源重用</li>
+<li>提升系统响应速度</li>
+<li>避免数据库连接遗漏</li>
+</ul>
+<p><img src="https://pic.ericzht.space/PicGo/image-20250604213628899.png" alt="image-20250604213628899"></p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><ol>
+<li><p>标准接口：DataSource</p>
+<ol>
+<li><p>官方提供的标准接口，由第三方实现此接口。</p>
+</li>
+<li><p>功能：获取连接</p>
+<p><code>Connection getConnection()</code></p>
+</li>
+</ol>
+</li>
+<li><p>目前常用的数据库连接池：</p>
+</li>
+</ol>
+<p>Druid（德鲁伊） 阿里巴巴开源的数据库连接池项目</p>
+<p>功能强大，性能优秀，是Java语言最好的数据库连接池之一。</p>
+<h2 id="使用步骤"><a href="#使用步骤" class="headerlink" title="使用步骤"></a>使用步骤</h2><ol>
+<li>导入jar包 druid-1.1.12.jar</li>
+<li>定义配置文件</li>
+<li>加载配置文件</li>
+<li>获取数据库连接池对象</li>
+<li>获取连接</li>
+</ol>
+<p><img src="https://pic.ericzht.space/PicGo/image-20250605110802808.png" alt="image-20250605110802808"></p>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/JDBC/">JDBC</a></div><div class="post-share"><div class="social-share" data-image="/image/icon.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2025/06/04/JavaWeb/" title="JDBC"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">JDBC</div></div><div class="info-2"><div class="info-item-1">一、JSON 基础语法 二、Ajax -...</div></div></div></a><a class="pagination-related" href="/2025/06/02/mysql%E9%AB%98%E7%BA%A7/" title="mysql 高级"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">mysql 高级</div></div><div class="info-2"><div class="info-item-1">存储过程概述数据库中内置的一种编程语言，可以把多条SQL语句以逻辑代码的方式串联起来执行。 每一个存储过程都是一个数据库对象，就像table和view一样，存储在数据库中，一次编译永久有效。每一个存储过程都有自己的名字，客户端程序通过名字来调用存储过程。 在数据量特别大的情况下使用存储过程能达到倍速的效率提升。 优缺点优点：速度快。   - 降低了**应用服务器**和**数据库服务器**之间网络通讯的开销。尤其在数据量庞大的情况下效果显著。  缺点：移植性差。编写难度大。维护性差。   - 每一个数据库都有自己的存储过程的语法规则，这种语法规则不是通用的。一旦使用了存储过程，则数据库产品很难更换，例如：编写了mysql的存储过程，这段代码只能在mysql中运行，无法在oracle数据库中运行。   -...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2025/06/04/JavaWeb/" title="JDBC"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-06-04</div><div class="info-item-2">JDBC</div></div><div class="info-2"><div class="info-item-1">一、JSON 基础语法 二、Ajax -...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/image/icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">eric_zht</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">15</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">9</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%A6%82%E8%BF%B0"><span class="toc-text">一、概述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81DriverManager"><span class="toc-text">二、DriverManager</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E5%86%8C%E9%A9%B1%E5%8A%A8"><span class="toc-text">注册驱动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E8%BF%9E%E6%8E%A5"><span class="toc-text">获取连接</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Connection"><span class="toc-text">Connection</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E6%89%A7%E8%A1%8CSQL%E7%9A%84statement%E5%AF%B9%E8%B1%A1"><span class="toc-text">获取执行SQL的statement对象</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%99%AE%E9%80%9A%E6%89%A7%E8%A1%8CSQL%E5%AF%B9%E8%B1%A1"><span class="toc-text">普通执行SQL对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%84%E7%BC%96%E8%AF%91SQL%E7%9A%84%E6%89%A7%E8%A1%8CSQL%E5%AF%B9%E8%B1%A1%EF%BC%9A%E9%98%B2%E6%AD%A2SQL%E6%B3%A8%E5%85%A5"><span class="toc-text">预编译SQL的执行SQL对象：防止SQL注入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E7%9A%84%E5%AF%B9%E8%B1%A1"><span class="toc-text">执行存储过程的对象</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86"><span class="toc-text">事务管理</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Statement"><span class="toc-text">Statement</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%A7%E8%A1%8CSQL%E8%AF%AD%E5%8F%A5"><span class="toc-text">执行SQL语句</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ResultSet"><span class="toc-text">ResultSet</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%81%E8%A3%85DQL%E6%9F%A5%E8%AF%A2%E8%AF%AD%E5%8F%A5%E7%9A%84%E7%BB%93%E6%9E%9C"><span class="toc-text">封装DQL查询语句的结果</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#PreparedStatement"><span class="toc-text">PreparedStatement</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E6%B1%A0"><span class="toc-text">数据库连接池</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0"><span class="toc-text">实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%AD%A5%E9%AA%A4"><span class="toc-text">使用步骤</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/06/04/JavaWeb/" title="JDBC">JDBC</a><time datetime="2025-06-03T16:00:00.000Z" title="发表于 2025-06-04 00:00:00">2025-06-04</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/06/04/JDBC/" title="JDBC">JDBC</a><time datetime="2025-06-03T16:00:00.000Z" title="发表于 2025-06-04 00:00:00">2025-06-04</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/06/02/mysql%E9%AB%98%E7%BA%A7/" title="mysql 高级">mysql 高级</a><time datetime="2025-06-01T16:00:00.000Z" title="发表于 2025-06-02 00:00:00">2025-06-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/05/25/mysql%E5%88%9D%E7%BA%A7/" title="mysql 初级">mysql 初级</a><time datetime="2025-05-24T16:00:00.000Z" title="发表于 2025-05-25 00:00:00">2025-05-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/04/25/javase%20%E6%95%B0%E7%BB%84/" title="javase 数组">javase 数组</a><time datetime="2025-04-24T16:00:00.000Z" title="发表于 2025-04-25 00:00:00">2025-04-25</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2025 By eric_zht</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
