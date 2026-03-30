@@ -1,0 +1,191 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>javase 单元测试 | eric_zht</title><meta name="author" content="eric_zht"><meta name="copyright" content="eric_zht"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="一、单元测试引入为什么需要单元测试，而不能自己在main方法中测试？ 在main方法中测试，只能手动的规定要测试哪些方法，如果某一个方法出错，就无法再对后续的方法进行测试。 Junit单元测试框架优点 可以针对某个方法执行测试，也支持一键完成对全部方法的自动化测试，且各自独立。 会自动生成测试报告，不需要程序员自行分析测试结果。  步骤 举例 二、反射加载类，并以编程的方式去解剖类中的各种成分（成">
+<meta property="og:type" content="article">
+<meta property="og:title" content="javase 单元测试">
+<meta property="og:url" content="http://example.com/2026/02/10/javaSE/javase%20%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E3%80%81%E5%8F%8D%E5%B0%84%E3%80%81%E6%B3%A8%E8%A7%A3%E3%80%81%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/index.html">
+<meta property="og:site_name" content="eric_zht">
+<meta property="og:description" content="一、单元测试引入为什么需要单元测试，而不能自己在main方法中测试？ 在main方法中测试，只能手动的规定要测试哪些方法，如果某一个方法出错，就无法再对后续的方法进行测试。 Junit单元测试框架优点 可以针对某个方法执行测试，也支持一键完成对全部方法的自动化测试，且各自独立。 会自动生成测试报告，不需要程序员自行分析测试结果。  步骤 举例 二、反射加载类，并以编程的方式去解剖类中的各种成分（成">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/image/icon.png">
+<meta property="article:published_time" content="2026-02-09T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-02-15T14:17:02.931Z">
+<meta property="article:author" content="eric_zht">
+<meta property="article:tag" content="javase">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/image/icon.png"><link rel="shortcut icon" href="/image/favicon.png"><link rel="canonical" href="http://example.com/2026/02/10/javaSE/javase%20%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E3%80%81%E5%8F%8D%E5%B0%84%E3%80%81%E6%B3%A8%E8%A7%A3%E3%80%81%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'javase 单元测试',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  isShuoshuo: false
+}</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/image/icon.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">27</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://pic.imgdb.cn/item/6741310cd29ded1a8c7a7799.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">eric_zht</span></a><a class="nav-page-title" href="/"><span class="site-name">javase 单元测试</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">javase 单元测试</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-02-09T16:00:00.000Z" title="发表于 2026-02-10 00:00:00">2026-02-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-02-15T14:17:02.931Z" title="更新于 2026-02-15 22:17:02">2026-02-15</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">470</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>1分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="一、单元测试"><a href="#一、单元测试" class="headerlink" title="一、单元测试"></a>一、单元测试</h1><h2 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h2><p>为什么需要单元测试，而不能自己在main方法中测试？</p>
+<p>在main方法中测试，只能手动的规定要测试哪些方法，如果某一个方法出错，就无法再对后续的方法进行测试。</p>
+<h2 id="Junit单元测试框架"><a href="#Junit单元测试框架" class="headerlink" title="Junit单元测试框架"></a>Junit单元测试框架</h2><h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><ol>
+<li>可以针对某个方法执行测试，也支持一键完成对全部方法的自动化测试，且各自独立。</li>
+<li>会自动生成测试报告，不需要程序员自行分析测试结果。</li>
+</ol>
+<h3 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h3><p><img src="https://pic.ericzht.space/PicGo/image-20260210172215070.png" alt="image-20260210172215070"></p>
+<h3 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h3><p><img src="https://pic.ericzht.space/PicGo/image-20260210173853625.png" alt="image-20260210173853625"></p>
+<h1 id="二、反射"><a href="#二、反射" class="headerlink" title="二、反射"></a>二、反射</h1><p>加载类，并以编程的方式去解剖类中的各种成分（成员变量、方法、构造器）</p>
+<h2 id="1、获取Class对象"><a href="#1、获取Class对象" class="headerlink" title="1、获取Class对象"></a>1、获取Class对象</h2><p><img src="https://pic.ericzht.space/PicGo/image-20260210181751041.png" alt="image-20260210181751041"></p>
+<h2 id="2、获取类的构造器"><a href="#2、获取类的构造器" class="headerlink" title="2、获取类的构造器"></a>2、获取类的构造器</h2><p><img src="https://pic.ericzht.space/PicGo/image-20260210182313613.png" alt="image-20260210182313613"></p>
+<p>举例：</p>
+<p><img src="https://pic.ericzht.space/PicGo/image-20260210183052417.png" alt="image-20260210183052417"></p>
+<p><img src="https://pic.ericzht.space/PicGo/image-20260210201851089.png" alt="image-20260210201851089"></p>
+<h2 id="3、获取类的成员变量"><a href="#3、获取类的成员变量" class="headerlink" title="3、获取类的成员变量"></a>3、获取类的成员变量</h2><p><img src="https://pic.ericzht.space/PicGo/image-20260210183406539.png" alt="image-20260210183406539"></p>
+<h2 id="4、获取类的方法"><a href="#4、获取类的方法" class="headerlink" title="4、获取类的方法"></a>4、获取类的方法</h2><p><img src="https://pic.ericzht.space/PicGo/image-20260210203558885.png" alt="image-20260210203558885"></p>
+<h2 id="反射的作用"><a href="#反射的作用" class="headerlink" title="反射的作用"></a>反射的作用</h2><ol>
+<li>基本作用：可以得到一个类的全部成分然后操作。</li>
+<li>可以破坏封装性</li>
+<li>可以绕过泛型的约束</li>
+<li><strong>适合做JAVA的框架，主流的框架基本都会基于反射设计出一些通用的功能</strong></li>
+</ol>
+<h1 id="三、注解"><a href="#三、注解" class="headerlink" title="三、注解"></a>三、注解</h1><p>让其他程序根据注解信息来决定怎么执行该程序。</p>
+<h2 id="1、自定义注解"><a href="#1、自定义注解" class="headerlink" title="1、自定义注解"></a>1、自定义注解</h2><p><img src="https://pic.ericzht.space/PicGo/image-20260210211745375.png" alt="image-20260210211745375"></p>
+<p><strong>特殊属性名：value</strong></p>
+<p>如果注解中只有一个value属性，使用注解时，value名称可以不写。</p>
+<p><img src="https://pic.ericzht.space/PicGo/image-20260210212517722.png" alt="image-20260210212517722"></p>
+<h2 id="2、注解的原理"><a href="#2、注解的原理" class="headerlink" title="2、注解的原理"></a>2、注解的原理</h2><p><img src="https://pic.ericzht.space/PicGo/image-20260210212927033.png" alt="image-20260210212927033"></p>
+<h2 id="3、元注解"><a href="#3、元注解" class="headerlink" title="3、元注解"></a>3、元注解</h2><p>注解某个注解的注解</p>
+<p>@Target 声明被修饰的注解只能在哪些位置使用</p>
+<p>@Retention 声明注解的保留周期</p>
+<p><img src="https://pic.ericzht.space/PicGo/image-20260210213739184.png" alt="image-20260210213739184"></p>
+<h2 id="4、解析注解"><a href="#4、解析注解" class="headerlink" title="4、解析注解"></a>4、解析注解</h2><p><img src="https://pic.ericzht.space/PicGo/image-20260210222606474.png" alt="image-20260210222606474"></p>
+<p>举例：</p>
+<p><img src="https://pic.ericzht.space/PicGo/image-20260210222846760.png" alt="image-20260210222846760"></p>
+<h2 id="5、注解的应用场景"><a href="#5、注解的应用场景" class="headerlink" title="5、注解的应用场景"></a>5、注解的应用场景</h2><p>可以自定义怎么进行测试（比如，使用注解的才测试），根据<strong>注解</strong>得到不同的<strong>测试次数</strong>（注解的属性的作用）。</p>
+<p><img src="https://pic.ericzht.space/PicGo/image-20260210225459232.png" alt="image-20260210225459232"></p>
+<h1 id="四、动态代理"><a href="#四、动态代理" class="headerlink" title="四、动态代理"></a>四、动态代理</h1><p>通过代理转移部分职责</p>
+<p><img src="https://pic.ericzht.space/PicGo/image-20260215191519824.png" alt="image-20260215191519824"></p>
+<h2 id="1、为JAVA对象创建代理对象"><a href="#1、为JAVA对象创建代理对象" class="headerlink" title="1、为JAVA对象创建代理对象"></a>1、为JAVA对象创建代理对象</h2><p><img src="https://pic.ericzht.space/PicGo/image-20260215191616676.png" alt="image-20260215191616676"></p>
+<p>举例：</p>
+<p><img src="https://pic.ericzht.space/PicGo/image-20260215221657603.png" alt="image-20260215221657603"></p>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/javase/">javase</a></div><div class="post-share"><div class="social-share" data-image="/image/icon.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2026/03/25/javaSE/JVM/" title="JVM"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">JVM</div></div><div class="info-2"><div class="info-item-1">一、垃圾回收1.1 如何判断对象是否可以回收1.1.1 引用计数法A、B对象循环引用，但是别的地方没有使用A、B了。由于A、B的引用计数都为1，所以无法回收，造成内存泄漏。 1.1.2 可达性分析算法JAVA使用这个算法 确定根对象GC Root(肯定不能被垃圾回收的对象)。判断每个对象是不是被根对象直接或间接的引用，如果是，则不能作为垃圾回收。 1.1.3 五种引用  引用本身也是一个对象，当软&#x2F;弱引用的对象被回收后，可以将软引用&#x2F;弱引用自己（对象）放入引用队列，然后通过引用队列进一步释放他们自己的对象所占的空间。 虚引用&#x2F;终结器引用必须配合引用队列一起使用  (1) 强引用定义：Object obj = new Object(); 这种方式的赋值 特点：只要引用关系还存在，GC（垃圾回收器）就永远不回收被引用的对象。 (2) 软引用特点：当系统内存充足时不会回收软引用的对象；但当内存不足时，回收软引用的对象。 (3) 弱引用特点：只要发生了垃圾回收，不管内存是否充足，都会回收弱引用的对象。 (4)...</div></div></div></a><a class="pagination-related" href="/2026/02/09/javaSE/javase%20%E5%A4%9A%E7%BA%BF%E7%A8%8B/" title="javase 多线程"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">javase 多线程</div></div><div class="info-2"><div class="info-item-1">一、多线程（一）创建多线程的三种方法1、继承Thread类，重写run()方法 注意：一定要调用线程对象的start方法，如果调用run方法，JAVA会把它看成一个普通的线程。 2、实现Runnable接口，重写run()方法 举例：  写法二、匿名内部类：  写法三、lambda表达式 3、实现Callable接口前两种方法主线程拿不到子线程的返回值。 而第三种方法可以。   举例：  （省略MyCallable的定义代码，其中还写了MyCallable的有参构造函数，这样就可以对其进行传参了。）  那么，为什么不直接把FutureTask的功能给Callable呢？为什么还要多加一层？ gemini的回答：   总结 （二）线程的常用方法 （三）线程同步1、同步代码块 synchronized()括号中的对象相当于是信号量 使用规范 2、同步方法 举例 同步代码块和同步方法的区别 同步代码块锁的范围更小，性能更好 同步方法的可读性更好，实现更简单  3、Lock锁相比前两种更加灵活。  12345// 创建锁对象private final Lock lk = new...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2025/04/13/javase%20%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" title="javase 面向对象"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-04-13</div><div class="info-item-2">javase 面向对象</div></div><div class="info-2"><div class="info-item-1">三、面向对象面向对象概述面向过程关注点在实现功能的步骤上 面向对象关注点在实现功能需要哪些对象的参与，可以把问题拆分成几个对象，对象协作起来解决问题。 面向对象开发方式耦合度低，扩展能力强。 面向对象的三大特征 封装 继承 多态  对象的创建1234[修饰符列表] class 类名&#123;    //属性    /&#125;    JVM内存分析元空间 metaspace元空间中存储的是类的元信息，字节码等。 元空间是java8之后引入的。是JVM规范中方法区的实现。 方法区：JVM规范 的叫法，各个厂商根据这个规范去实现具体的java虚拟机。 总结：方法区是规范，元空间是实现。java8之前使用永久代实现的。 堆内存所有new的对象，都存储在堆内存中。 栈方法被调用时会给该方法分配空间，在VM...</div></div></div></a><a class="pagination-related" href="/2025/04/25/javase%20%E6%95%B0%E7%BB%84/" title="javase 数组"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-04-25</div><div class="info-item-2">javase 数组</div></div><div class="info-2"><div class="info-item-1">四、数组数组概述 数组是引用数据类型，隐式继承Object，因此可以调用Object类中的方法 数组对象存储在堆内存中  数组的特点 数组长度一旦确定不可改变 所有数组对象都有length属性，用来获取数组元素个数  优点：  根据下标查找某个元素的效率极高  缺点：  随机增删的效率低，需要后移&#x2F;前移很多元素 无法存储大量数据，因为很难在内存上找到非常大的一块连续内存  一维数组静态初始化一维数组已经知道数组中的值时使用 1234// 第一种int[] arr = &#123;11,22,33&#125;; 或者 int arr[] = &#123;11,22,33&#125;; //后者不建议// 第二种int[] arr = new int[] &#123;11,22,33&#125;;  用第一种就好了！ JDK5 新特性：增强for循环 &#x2F; for-each 循环123for(元素数据类型 变量名:数组名)&#123; // 变量名代表数组中的每个元素，可以自己取名   ...</div></div></div></a><a class="pagination-related" href="/2026/02/07/javaSE/javase%20%E9%9B%86%E5%90%88%E3%80%81Stream%E6%B5%81%E3%80%81%E5%87%BD%E6%95%B0%E5%BC%8F%E6%8E%A5%E5%8F%A3/" title="javase 集合、Strean流、函数式接口"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-02-07</div><div class="info-item-2">javase 集合、Strean流、函数式接口</div></div><div class="info-2"><div class="info-item-1">一、集合（一）Collection集合 Collection集合的特点 1、ListArrayList数组、LinkedList链表 2、SetHashSetJDK8前：数组+链表 JDK8后：数组+链表+红黑树 LinkedHashSetHashSet中的每个元素都加上前后指针，变成双向链表 TreeSet自定义排序规则  Double.compare(a, b)默认是升序，即a-b&gt;0则a在排在后面。 如果修改成Double.compare(b,...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/image/icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">eric_zht</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">27</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/erichtz"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95"><span class="toc-text">一、单元测试</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E5%85%A5"><span class="toc-text">引入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Junit%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6"><span class="toc-text">Junit单元测试框架</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E7%82%B9"><span class="toc-text">优点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A4"><span class="toc-text">步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BE%E4%BE%8B"><span class="toc-text">举例</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%8F%8D%E5%B0%84"><span class="toc-text">二、反射</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81%E8%8E%B7%E5%8F%96Class%E5%AF%B9%E8%B1%A1"><span class="toc-text">1、获取Class对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81%E8%8E%B7%E5%8F%96%E7%B1%BB%E7%9A%84%E6%9E%84%E9%80%A0%E5%99%A8"><span class="toc-text">2、获取类的构造器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%E3%80%81%E8%8E%B7%E5%8F%96%E7%B1%BB%E7%9A%84%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F"><span class="toc-text">3、获取类的成员变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4%E3%80%81%E8%8E%B7%E5%8F%96%E7%B1%BB%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-text">4、获取类的方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8D%E5%B0%84%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-text">反射的作用</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%B3%A8%E8%A7%A3"><span class="toc-text">三、注解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81%E8%87%AA%E5%AE%9A%E4%B9%89%E6%B3%A8%E8%A7%A3"><span class="toc-text">1、自定义注解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81%E6%B3%A8%E8%A7%A3%E7%9A%84%E5%8E%9F%E7%90%86"><span class="toc-text">2、注解的原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%E3%80%81%E5%85%83%E6%B3%A8%E8%A7%A3"><span class="toc-text">3、元注解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4%E3%80%81%E8%A7%A3%E6%9E%90%E6%B3%A8%E8%A7%A3"><span class="toc-text">4、解析注解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5%E3%80%81%E6%B3%A8%E8%A7%A3%E7%9A%84%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-text">5、注解的应用场景</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86"><span class="toc-text">四、动态代理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81%E4%B8%BAJAVA%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA%E4%BB%A3%E7%90%86%E5%AF%B9%E8%B1%A1"><span class="toc-text">1、为JAVA对象创建代理对象</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/25/javaSE/JVM/" title="JVM">JVM</a><time datetime="2026-03-24T16:00:00.000Z" title="发表于 2026-03-25 00:00:00">2026-03-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/02/10/javaSE/javase%20%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E3%80%81%E5%8F%8D%E5%B0%84%E3%80%81%E6%B3%A8%E8%A7%A3%E3%80%81%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/" title="javase 单元测试">javase 单元测试</a><time datetime="2026-02-09T16:00:00.000Z" title="发表于 2026-02-10 00:00:00">2026-02-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/02/09/javaSE/javase%20%E5%A4%9A%E7%BA%BF%E7%A8%8B/" title="javase 多线程">javase 多线程</a><time datetime="2026-02-08T16:00:00.000Z" title="发表于 2026-02-09 00:00:00">2026-02-09</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/02/07/javaSE/javase%20%E9%9B%86%E5%90%88%E3%80%81Stream%E6%B5%81%E3%80%81%E5%87%BD%E6%95%B0%E5%BC%8F%E6%8E%A5%E5%8F%A3/" title="javase 集合、Strean流、函数式接口">javase 集合、Strean流、函数式接口</a><time datetime="2026-02-06T16:00:00.000Z" title="发表于 2026-02-07 00:00:00">2026-02-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/12/14/%E7%81%B5%E8%8C%B6%E5%B1%B1%E8%89%BE%E5%BA%9C%20%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/" title="灵茶山艾府 算法基础">灵茶山艾府 算法基础</a><time datetime="2025-12-13T16:00:00.000Z" title="发表于 2025-12-14 00:00:00">2025-12-14</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(https://pic.imgdb.cn/item/6741310cd29ded1a8c7a7799.jpg);"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2026 By eric_zht</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
