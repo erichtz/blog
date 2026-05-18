@@ -1,0 +1,425 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Mysql | eric_zht</title><meta name="author" content="eric_zht"><meta name="copyright" content="eric_zht"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="一、事务1.1 简介事务是一组操作的集合，是不可分割的工作单位，要么同时成功，要么同时失败。 默认MySQL的事务是自动提交的，当执行一条DML语句，MySQL会立即隐式提交事务。 1.2 事务操作查看&#x2F;设置事务提交方式SELECT @@autocommit ; SET @@autocommit &#x3D; 0 ; 0：不自动提交   1：自动提交 提交事务COMMIT; 回滚事务ROLLBAC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mysql">
+<meta property="og:url" content="http://example.com/2026/04/05/javaSE/Mysql/index.html">
+<meta property="og:site_name" content="eric_zht">
+<meta property="og:description" content="一、事务1.1 简介事务是一组操作的集合，是不可分割的工作单位，要么同时成功，要么同时失败。 默认MySQL的事务是自动提交的，当执行一条DML语句，MySQL会立即隐式提交事务。 1.2 事务操作查看&#x2F;设置事务提交方式SELECT @@autocommit ; SET @@autocommit &#x3D; 0 ; 0：不自动提交   1：自动提交 提交事务COMMIT; 回滚事务ROLLBAC">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/image/icon.png">
+<meta property="article:published_time" content="2026-04-04T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-04-10T12:32:06.582Z">
+<meta property="article:author" content="eric_zht">
+<meta property="article:tag" content="Mysql">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/image/icon.png"><link rel="shortcut icon" href="/image/favicon.png"><link rel="canonical" href="http://example.com/2026/04/05/javaSE/Mysql/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Mysql',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  isShuoshuo: false
+}</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/image/icon.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">31</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://pic.imgdb.cn/item/6741310cd29ded1a8c7a7799.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">eric_zht</span></a><a class="nav-page-title" href="/"><span class="site-name">Mysql</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Mysql</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-04-04T16:00:00.000Z" title="发表于 2026-04-05 00:00:00">2026-04-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-04-10T12:32:06.582Z" title="更新于 2026-04-10 20:32:06">2026-04-10</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">4.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>15分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="一、事务"><a href="#一、事务" class="headerlink" title="一、事务"></a>一、事务</h1><h2 id="1-1-简介"><a href="#1-1-简介" class="headerlink" title="1.1 简介"></a>1.1 简介</h2><p>事务是一组操作的集合，是不可分割的工作单位，要么同时成功，要么同时失败。</p>
+<p><strong>默认MySQL的事务是自动提交的，当执行一条DML语句，MySQL会立即隐式提交事务。</strong></p>
+<h2 id="1-2-事务操作"><a href="#1-2-事务操作" class="headerlink" title="1.2 事务操作"></a>1.2 事务操作</h2><h3 id="查看-设置事务提交方式"><a href="#查看-设置事务提交方式" class="headerlink" title="查看&#x2F;设置事务提交方式"></a>查看&#x2F;设置事务提交方式</h3><p><code>SELECT @@autocommit ;</code></p>
+<p><code>SET @@autocommit = 0 ;</code></p>
+<p>0：不自动提交   1：自动提交</p>
+<h3 id="提交事务"><a href="#提交事务" class="headerlink" title="提交事务"></a>提交事务</h3><p><code>COMMIT;</code></p>
+<h3 id="回滚事务"><a href="#回滚事务" class="headerlink" title="回滚事务"></a>回滚事务</h3><p><code>ROLLBACK;</code></p>
+<h3 id="开启事务"><a href="#开启事务" class="headerlink" title="开启事务"></a>开启事务</h3><p><code>START TRANSACTION; 或 BEGIN;</code></p>
+<h2 id="1-3-ACID"><a href="#1-3-ACID" class="headerlink" title="1.3 ACID"></a>1.3 ACID</h2><p><img src="https://pic.ericzht.space/PicGo/image-20260405170220484.png" alt="image-20260405170220484"></p>
+<h2 id="1-4-并发事务问题"><a href="#1-4-并发事务问题" class="headerlink" title="1.4 并发事务问题"></a>1.4 并发事务问题</h2><p><img src="https://pic.ericzht.space/PicGo/image-20260406150034555.png" alt="image-20260406150034555"></p>
+<h2 id="1-5-事务隔离级别"><a href="#1-5-事务隔离级别" class="headerlink" title="1.5 事务隔离级别"></a>1.5 事务隔离级别</h2><p><img src="https://pic.ericzht.space/PicGo/image-20260406150430028.png" alt="image-20260406150430028"></p>
+<p>查看事务隔离级别：<code>SELECT @@TRANSACTION_ISOLATION;</code></p>
+<p>设置事务隔离级别：<code>SET [ SESSION | GLOBAL ] TRANSACTION ISOLATION LEVEL &#123; READ UNCOMMITTED | READ COMMITTED | REPEATABLE READ | SERIALIZABLE &#125;</code></p>
+<p><strong>注：事务隔离级别越高，数据越安全，但是性能越低</strong></p>
+<h1 id="二、存储引擎"><a href="#二、存储引擎" class="headerlink" title="二、存储引擎"></a>二、存储引擎</h1><p><img src="https://pic.ericzht.space/PicGo/image-20260406152908495.png" alt="image-20260406152908495"></p>
+<h2 id="2-1-介绍"><a href="#2-1-介绍" class="headerlink" title="2.1 介绍"></a>2.1 介绍</h2><p>存储引擎就是存储数据、建立索引、更新&#x2F;查询数据等<strong>技术的实现方式</strong> 。存储引擎是<strong>基于表</strong>的，而不是基于库的，所以存储引擎也可被称为表类型。建表时可以指定存储引擎，如果没有指定将自动选择默认存储引擎。</p>
+<p><img src="https://pic.ericzht.space/PicGo/image-20260406153844609.png" alt="image-20260406153844609"></p>
+<h2 id="2-2-存储引擎特点"><a href="#2-2-存储引擎特点" class="headerlink" title="2.2 存储引擎特点"></a>2.2 存储引擎特点</h2><h3 id="2-2-1-InnoDB"><a href="#2-2-1-InnoDB" class="headerlink" title="2.2.1 InnoDB"></a>2.2.1 InnoDB</h3><h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><p>InnoDB是一种<strong>兼顾高可靠性</strong>和<strong>高性能</strong>的<strong>通用存储引擎</strong>，在 MySQL 5.5 之后，InnoDB是默认的MySQL 存储引擎。</p>
+<h4 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h4><ul>
+<li>DML操作遵循ACID，支持 <strong>事务</strong></li>
+<li><strong>行级锁</strong>，提高并发访问性能</li>
+<li>支持<strong>外键</strong> FOREIGN KEY约束，保证数据的完整性和正确性</li>
+</ul>
+<h4 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h4><p>xxx.ibd：xxx代表的是表名，innoDB引擎的每张表都会对应这样一个表空间文件，存储该表的<strong>表结构</strong>（frm-早期的 、sdi-新版的）、<strong>数据</strong>和<strong>索引</strong>。</p>
+<p>参数：<code>innodb_file_per_table</code></p>
+<p>如果该参数开启，代表对于InnoDB引擎的表，每一张表都对应一个ibd文件。</p>
+<p><img src="https://pic.ericzht.space/PicGo/image-20260406154346049.png" alt="image-20260406154346049"></p>
+<h4 id="逻辑存储结构"><a href="#逻辑存储结构" class="headerlink" title="逻辑存储结构"></a>逻辑存储结构</h4><p><img src="https://pic.ericzht.space/PicGo/image-20260406155130738.png" alt="image-20260406155130738"></p>
+<h3 id="2-2-2-MyISAM"><a href="#2-2-2-MyISAM" class="headerlink" title="2.2.2 MyISAM"></a>2.2.2 MyISAM</h3><h4 id="介绍-1"><a href="#介绍-1" class="headerlink" title="介绍"></a>介绍</h4><p>MySQL早期的默认存储引擎。</p>
+<h4 id="特点-1"><a href="#特点-1" class="headerlink" title="特点"></a>特点</h4><ul>
+<li>不支持事务，不支持外键</li>
+<li>支持表锁，不支持行锁</li>
+<li>访问速度快</li>
+</ul>
+<h4 id="文件-1"><a href="#文件-1" class="headerlink" title="文件"></a>文件</h4><p>xxx.sdi：存储表结构信息</p>
+<p>xxx.MYD: 存储数据</p>
+<p>xxx.MYI: 存储索引</p>
+<h3 id="2-2-3-Memory"><a href="#2-2-3-Memory" class="headerlink" title="2.2.3 Memory"></a>2.2.3 Memory</h3><h4 id="介绍-2"><a href="#介绍-2" class="headerlink" title="介绍"></a>介绍</h4><p>表数据存储在<strong>内存</strong>中，由于受到硬件问题、或断电问题的影响，只能将这些表作为临时表或缓存使用。</p>
+<h4 id="特点-2"><a href="#特点-2" class="headerlink" title="特点"></a>特点</h4><ul>
+<li>内存存放</li>
+<li>hash索引（默认）</li>
+</ul>
+<h4 id="文件-2"><a href="#文件-2" class="headerlink" title="文件"></a>文件</h4><p>xxx.sdi：存储表结构信息</p>
+<p><img src="https://pic.ericzht.space/PicGo/image-20260406155820955.png" alt="image-20260406155820955"></p>
+<p>注：InnoDB支持<strong>行锁</strong>和<strong>表锁</strong></p>
+<h2 id="2-3-存储引擎的选择"><a href="#2-3-存储引擎的选择" class="headerlink" title="2.3 存储引擎的选择"></a>2.3 存储引擎的选择</h2><p>根据业务的需求，选择合适的存储引擎。</p>
+<ul>
+<li><p><strong>InnoDB</strong>: 是Mysql的默认存储引擎，支持事务、外键。如果应用对<strong>事务的完整性</strong>有比较高的要求，在<strong>并发条件</strong>下要求<strong>数据的一致性</strong>，数据操作除了插入和查询之外，还包含很多的<strong>更新、删除</strong>操作，那么InnoDB存储引擎是比较合适的选择。</p>
+</li>
+<li><p>MyISAM ： 如果应用是以<strong>读操作</strong>和<strong>插入操作</strong>为主，只有很少的更新和删除操作，并且对事务的完整性、并发性要求不是很高，那么选择这个存储引擎是非常合适的。【被MongoDB替代】</p>
+</li>
+<li><p>MEMORY：将所有数据保存在<strong>内存中</strong>，<strong>访问速度快</strong>，通常用于<strong>临时表及缓存</strong>。MEMORY的缺陷就是对表的大小有限制，太大的表无法缓存在内存中，而且无法保障数据的安全性。【被Redis替代】</p>
+</li>
+</ul>
+<h1 id="三、索引"><a href="#三、索引" class="headerlink" title="三、索引"></a>三、索引</h1><h2 id="3-1-索引概述"><a href="#3-1-索引概述" class="headerlink" title="3.1 索引概述"></a>3.1 索引概述</h2><p>索引（index）是帮助MySQL高效获取数据的**数据结构(有序)**。在数据之外，数据库系统还维护着满足特定查找算法的数据结构，这些数据结构以某种方式引用（指向）数据， 这样就可以在这些数据结构上实现高级查找算法，这种数据结构就是索引。</p>
+<p><img src="https://pic.ericzht.space/PicGo/image-20260407100649498.png" alt="image-20260407100649498"></p>
+<h2 id="3-2-索引结构"><a href="#3-2-索引结构" class="headerlink" title="3.2 索引结构"></a>3.2 索引结构</h2><p><img src="https://pic.ericzht.space/PicGo/image-20260407100912695.png" alt="image-20260407100912695"></p>
+<p><img src="https://pic.ericzht.space/PicGo/image-20260407101030140.png" alt="image-20260407101030140"></p>
+<p>默认是<strong>B+树</strong>索引</p>
+<p>（二叉树顺序插入数据时会退化成链表；红黑树是一颗自平衡二叉树，但是大数据量情况下，层级较深，检索速度慢）</p>
+<h2 id="3-3-B-Tree"><a href="#3-3-B-Tree" class="headerlink" title="3.3 B-Tree"></a>3.3 B-Tree</h2><p>最大度数为5（5阶），则每个节点最多存储4个数据，有5个指针。度数指的是一个节点的子节点的个数。</p>
+<p><img src="https://pic.ericzht.space/PicGo/image-20260407102544043.png" alt="image-20260407102544043"></p>
+<h2 id="3-4-B-Tree"><a href="#3-4-B-Tree" class="headerlink" title="3.4 B+Tree"></a>3.4 B+Tree</h2><p>和B树的区别：</p>
+<ul>
+<li>所有数据都会出现在叶子节点</li>
+<li>叶子节点形成一个单向链表</li>
+<li>非叶子节点仅起到索引的作用，具体数据都存放在叶子节点中</li>
+</ul>
+<p><img src="https://pic.ericzht.space/PicGo/image-20260407103418414.png" alt="image-20260407103418414"></p>
+<p>MySQL对B+树进行了优化，将叶子节点的链表改成了<strong>双向循环链表</strong>。</p>
+<p><img src="https://pic.ericzht.space/PicGo/image-20260407103526743.png" alt="image-20260407103526743"></p>
+<h2 id="3-5-Hash"><a href="#3-5-Hash" class="headerlink" title="3.5 Hash"></a>3.5 Hash</h2><p>特点：</p>
+<ul>
+<li>只支持等于（&#x3D;, in）的比较，不支持范围查询、模糊查询</li>
+<li>无法利用索引完成排序操作</li>
+<li>查询效率高，通常（没有hash冲突的情况下）只需要一次检索，效率通常高于B+Tree索引</li>
+</ul>
+<p><img src="https://pic.ericzht.space/PicGo/image-20260407104050732.png" alt="image-20260407104050732"></p>
+<p>在MySQL中，支持hash索引的是<strong>Memory存储引擎</strong>。</p>
+<p>而InnoDB中具有自适应hash功能，hash索引是InnoDB存储引擎根据B+Tree索引在指定条件下自动构建的。</p>
+<h3 id="为什么InnoDB存储引擎选择使用B-tree索引结构"><a href="#为什么InnoDB存储引擎选择使用B-tree索引结构" class="headerlink" title="为什么InnoDB存储引擎选择使用B+tree索引结构?"></a>为什么InnoDB存储引擎选择使用B+tree索引结构?</h3><p>A. 相对于二叉树，层级更少，搜索效率高；</p>
+<p>B. 对于B-tree，无论是叶子节点还是非叶子节点，都会保存数据，这样导致<strong>一页中存储的键值减少</strong>，指针跟着减少，要同样保存大量数据，只能增加树的高度，导致性能降低；</p>
+<p>C. 相对Hash索引，B+tree支持范围匹配及排序操作；</p>
+<h2 id="3-6-索引分类"><a href="#3-6-索引分类" class="headerlink" title="3.6 索引分类"></a>3.6 索引分类</h2><p>在MySQL数据库，将索引的具体类型主要分为以下几类：</p>
+<p><img src="https://pic.ericzht.space/PicGo/image-20260407111227195.png" alt="image-20260407111227195"></p>
+<p>而在InnoDB存储引擎中，根据索引的存储形式，又可以分为以下两种：</p>
+<p><img src="https://pic.ericzht.space/PicGo/image-20260407112040589.png" alt="image-20260407112040589"></p>
+<p><strong>聚集索引</strong>选取规则:</p>
+<ul>
+<li><p>如果存在主键，主键索引就是聚集索引。</p>
+</li>
+<li><p>如果不存在主键，将使用第一个唯一（UNIQUE）索引作为聚集索引。</p>
+</li>
+<li><p>如果表没有主键，或没有合适的唯一索引，则InnoDB会自动生成一个rowid作为隐藏的聚集索引。</p>
+</li>
+</ul>
+<p>举例：</p>
+<p><img src="https://pic.ericzht.space/PicGo/image-20260407112441051.png" alt="image-20260407112441051"></p>
+<p>检索过程：</p>
+<p><img src="https://pic.ericzht.space/PicGo/image-20260407112537342.png" alt="image-20260407112537342"></p>
+<h2 id="3-7-索引语法"><a href="#3-7-索引语法" class="headerlink" title="3.7 索引语法"></a>3.7 索引语法</h2><ul>
+<li>创建索引</li>
+</ul>
+<p><code>CREATE [ UNIQUE | FULLTEXT ] INDEX index_name ON table_name (index_col_name,... ) ;</code></p>
+<p>如果关联了表中的多列，那么是<strong>联合索引</strong>。</p>
+<ul>
+<li>查看索引</li>
+</ul>
+<p><code>SHOW INDEX FROM table_name ;</code></p>
+<ul>
+<li>删除索引</li>
+</ul>
+<p><code>DROP INDEX index_name ON table_name ;</code></p>
+<h2 id="3-8-性能分析"><a href="#3-8-性能分析" class="headerlink" title="3.8 性能分析"></a>3.8 性能分析</h2><h3 id="3-8-1-SQL执行频率"><a href="#3-8-1-SQL执行频率" class="headerlink" title="3.8.1 SQL执行频率"></a>3.8.1 SQL执行频率</h3><p>通常在查询时的优化占比比较大，如果一个表经常使用增删改，查询比较少，那么就不需要优化。所以需要查看SQL语句的执行频率。</p>
+<p><code>show [session|global] status LIKE &#39;Com_______&#39;</code></p>
+<p>（7个下划线去匹配7个字符）</p>
+<p>– session 是查看当前会话 ; global 是查询全局数据 ;</p>
+<h3 id="3-8-2-慢查询日志"><a href="#3-8-2-慢查询日志" class="headerlink" title="3.8.2 慢查询日志"></a>3.8.2 慢查询日志</h3><p>慢查询日志记录了所有执行时间超过指定参数（long_query_time，单位：秒，默认10秒）的所有SQL语句的日志。</p>
+<p><img src="https://pic.ericzht.space/PicGo/image-20260408102817304.png" alt="image-20260408102817304"></p>
+<p>查看慢查询日志：</p>
+<p><img src="https://pic.ericzht.space/PicGo/image-20260408103524334.png" alt="image-20260408103524334"></p>
+<h3 id="3-8-3-profile详情（耗时详情）"><a href="#3-8-3-profile详情（耗时详情）" class="headerlink" title="3.8.3 profile详情（耗时详情）"></a>3.8.3 profile详情（耗时详情）</h3><p>执行一系列的业务SQL的操作，然后通过如下指令查看指令的执行耗时：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">-- 查看每一条SQL的耗时基本情况</span><br><span class="line">show profiles;</span><br><span class="line"></span><br><span class="line">-- 查看指定query_id的SQL语句各个阶段的耗时情况</span><br><span class="line">show profile for query query_id;</span><br><span class="line"></span><br><span class="line">-- 查看指定query_id的SQL语句CPU的使用情况</span><br><span class="line">show profile cpu for query query_id;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-8-4-explain执行计划"><a href="#3-8-4-explain执行计划" class="headerlink" title="3.8.4 explain执行计划"></a>3.8.4 explain执行计划</h3><p>EXPLAIN 或者 DESC命令获取 MySQL 如何执行 SELECT 语句的信息，包括在 SELECT 语句执行过程中表如何连接和连接的顺序。</p>
+<p><code>EXPLAIN/DESC SELECT 字段列表 FROM 表名 WHERE 条件 ;</code></p>
+<p><img src="https://pic.ericzht.space/PicGo/image-20260408110232893.png" alt="image-20260408110232893"></p>
+<p><img src="https://pic.ericzht.space/PicGo/image-20260408203044798.png"></p>
+<h2 id="3-9-索引失效情况"><a href="#3-9-索引失效情况" class="headerlink" title="3.9 索引失效情况"></a>3.9 索引失效情况</h2><h3 id="最左前缀法则"><a href="#最左前缀法则" class="headerlink" title="最左前缀法则"></a>最左前缀法则</h3><p>如果<strong>条件筛选中</strong>有字段使用了<strong>联合索引</strong>，要遵守<strong>最左前缀法则</strong>：查询从索引的最左列开始，并且不跳过索引中的列。如果跳跃某一列，**索引将会部分失效(后面的字段索引失效)**。</p>
+<p>注：mysql8以后允许跳跃了。</p>
+<h3 id="范围查询"><a href="#范围查询" class="headerlink" title="范围查询"></a>范围查询</h3><p>联合索引中，出现范围查询(&gt;,&lt;)，范围查询右侧的列索引失效。</p>
+<p>举例：</p>
+<p><img src="https://pic.ericzht.space/PicGo/image-20260408113916467.png" alt="image-20260408113916467"></p>
+<p><img src="https://pic.ericzht.space/PicGo/image-20260408114005650.png" alt="image-20260408114005650"></p>
+<h3 id="索引列运算"><a href="#索引列运算" class="headerlink" title="索引列运算"></a>索引列运算</h3><p>1、在索引列上使用<strong>函数运算</strong>，会导致索引失效。</p>
+<p><code>explain select * from tb_user where substring(phone,10,2) = &#39;15&#39;;</code></p>
+<p>2、字符串类型字段使用时，不加引号，索引将失效。</p>
+<h3 id="模糊查询"><a href="#模糊查询" class="headerlink" title="模糊查询"></a>模糊查询</h3><p>如果仅仅是尾部模糊匹配，索引不会失效。如果是<strong>头部模糊匹配</strong>，索引失效。</p>
+<h3 id="or连接的条件"><a href="#or连接的条件" class="headerlink" title="or连接的条件"></a>or连接的条件</h3><p>用or分割开的条件，左右两侧都需要有索引，否则索引会失效。</p>
+<h3 id="数据分布影响"><a href="#数据分布影响" class="headerlink" title="数据分布影响"></a>数据分布影响</h3><p>如果MySQL评估使用索引比全表扫描更慢，那么就不用索引。</p>
+<h2 id="3-10-SQL提示"><a href="#3-10-SQL提示" class="headerlink" title="3.10 SQL提示"></a>3.10 SQL提示</h2><p> 1、use index ： <strong>建议</strong>MySQL使用哪一个索引完成此次查询（仅仅是建议，mysql内部还会再次进行评估）</p>
+<p><code>explain select * from tb_user use index(idx_user_pro) where profession = &#39;软件工程&#39;;</code></p>
+<p>2、 ignore index ： 忽略指定的索引。</p>
+<p><code>explain select * from tb_user ignore index(idx_user_pro) where profession = &#39;软件工程&#39;;</code></p>
+<p>3、force index ： <strong>强制</strong>使用索引。</p>
+<p><code>explain select * from tb_user force index(idx_user_pro) where profession = &#39;软件工程&#39;;</code></p>
+<h2 id="3-11-覆盖索引"><a href="#3-11-覆盖索引" class="headerlink" title="3.11 覆盖索引"></a>3.11 覆盖索引</h2><p>覆盖索引：要查询的所有字段已经完全包含在了索引之中。</p>
+<p>比如有一个联合索引（name, password）这是键，索引对应的值是id。我要查询id,name,password，那么就是完全包含在这个索引之中的。如果我还要查询phone，这个是不包含在这个二级索引中的，所以需要回表查询，速度会慢一点。</p>
+<p>尽量使用覆盖索引，减少select *。</p>
+<p><img src="https://pic.ericzht.space/PicGo/image-20260408203044798.png" alt="image-20260408203044798"></p>
+<h2 id="3-12-前缀索引"><a href="#3-12-前缀索引" class="headerlink" title="3.12 前缀索引"></a>3.12 前缀索引</h2><p>当字段类型为<strong>字符串</strong>（varchar，text，longtext等）时，有时候需要索引很长的字符串，这会让索引变得很大，查询时，浪费大量的磁盘IO， 影响查询效率。此时可以只将字符串的<strong>一部分前缀建立索引</strong>，这样可以大大<strong>节约索引空间</strong>，从而提高索引效率。</p>
+<p><code>create index idx_email_5 on tb_user（email（5））;</code>其中这个（5）代表email的前5个字符。</p>
+<h3 id="确定前缀长度"><a href="#确定前缀长度" class="headerlink" title="确定前缀长度"></a>确定前缀长度</h3><p>可以根据索引的<strong>选择性</strong>来决定，而选择性是指<strong>不重复的索引值</strong>（基数）和<strong>数据表的记录总数</strong>的<strong>比值</strong>，索引选择性越高则查询效率越高， 唯一索引的选择性是1，这是最好的索引选择性，性能也是最好的。</p>
+<h3 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h3><p>现在二级索引中使用前缀进行查询，查询到相等的后，根据id到聚集索引中查询整行内容，然后对索引的那个字段进行判断是否一致，如果不一致就回到二级索引中寻找下一个相等的。如果相等就返回结果。</p>
+<p><img src="https://pic.ericzht.space/PicGo/image-20260408202325755.png" alt="image-20260408202325755"></p>
+<h2 id="3-13-单列索引-与-联合索引"><a href="#3-13-单列索引-与-联合索引" class="headerlink" title="3.13 单列索引 与 联合索引"></a>3.13 单列索引 与 联合索引</h2><p>如果存在多个查询条件，建议建立<strong>联合索引</strong>，避免回表查询。</p>
+<p>联合索引的结构：</p>
+<p><img src="https://pic.ericzht.space/PicGo/image-20260408203303699.png" alt="image-20260408203303699"></p>
+<p>（先按第一个字段进行排序，如果第一个字段完全相等，再按第二个排序）</p>
+<h2 id="3-14-索引设计原则"><a href="#3-14-索引设计原则" class="headerlink" title="3.14 索引设计原则"></a>3.14 索引设计原则</h2><ol>
+<li>数据量较大，且查询比较频繁的表建立索引</li>
+<li>针对常作为查询条件（where）、排序（order by）、分组（group by）操作的字段建立索引</li>
+<li>尽量选择区分度高的列作为索引，尽量建立唯一索引，区分度越高，使用索引的效率越高</li>
+<li>如果是字符串字段，字段的长度较长，可以建立前缀索引</li>
+<li>尽量使用联合索引（创建覆盖索引的条件，避免回表查询），减少单列索引。</li>
+<li>要控制索引的数量，索引并不是多多益善，索引越多，维护索引的代价也就越大，会影响增删改的效率</li>
+<li>如果索引列不能存储NULL值，需要在创建表时用NOT NULL约束。当优化器知道每列是否包含NULL时，它可以更好地确定哪个索引用于查询更加有效。</li>
+</ol>
+<h1 id="四、锁"><a href="#四、锁" class="headerlink" title="四、锁"></a>四、锁</h1><p>按锁的粒度分，分为：</p>
+<ul>
+<li>全局锁：锁定数据库的所有表</li>
+<li>表级锁：每次操作锁定整张表</li>
+<li>行级锁：每次操作锁住对应的行数据</li>
+</ul>
+<h2 id="4-1-全局锁"><a href="#4-1-全局锁" class="headerlink" title="4.1 全局锁"></a>4.1 全局锁</h2><p>典型使用场景是做全库的逻辑备份。</p>
+<p> <img src="https://pic.ericzht.space/PicGo/image-20260410143329148.png" alt="image-20260410143329148"></p>
+<p>存在的问题：</p>
+<ol>
+<li>如果在主库上备份，那么在备份期间不能执行更新，业务基本停摆。</li>
+<li>如果在从库上备份，那么在备份期间从库不能执行主库同步过来的二进制日志，会导致<strong>主从延迟</strong>。</li>
+</ol>
+<p>在InnoDB引擎中，我们可以在备份时加上参数 <code>--single-transaction</code> 参数来完成不加锁的一致性数据备份。</p>
+<h2 id="4-2-表级锁"><a href="#4-2-表级锁" class="headerlink" title="4.2 表级锁"></a>4.2 表级锁</h2><p>锁定粒度大，发生锁冲突的概率最高，并发度最低。</p>
+<p>分类：</p>
+<ol>
+<li>表锁</li>
+<li>元数据锁</li>
+<li>意向锁</li>
+</ol>
+<h3 id="4-2-1-表锁"><a href="#4-2-1-表锁" class="headerlink" title="4.2.1 表锁"></a>4.2.1 表锁</h3><p><strong>分类：</strong></p>
+<ol>
+<li>表共享读锁（read lock）</li>
+<li>表独占写锁（write lock）</li>
+</ol>
+<p><strong>语法：</strong></p>
+<p>加锁：<code>lock tables 表名 read/write</code></p>
+<p>释放锁：<code>unlock tables</code> &#x2F; 客户端断开连接</p>
+<h4 id="读锁"><a href="#读锁" class="headerlink" title="读锁"></a>读锁</h4><p>允许自己&#x2F;别的客户端<strong>读</strong>，但是不允许<strong>写</strong>（如果其他客户端要执行写操作，则其他客户端进入阻塞状态）</p>
+<p><img src="https://pic.ericzht.space/PicGo/image-20260410144807677.png" alt="image-20260410144807677"></p>
+<h4 id="写锁"><a href="#写锁" class="headerlink" title="写锁"></a>写锁</h4><p>允许自己读&#x2F;写，其他客户端的读&#x2F;写进去阻塞状态</p>
+<p><img src="https://pic.ericzht.space/PicGo/image-20260410145044691.png" alt="image-20260410145044691"></p>
+<h3 id="4-2-2-元数据锁-meta-data-lock，MDL"><a href="#4-2-2-元数据锁-meta-data-lock，MDL" class="headerlink" title="4.2.2 元数据锁 meta data lock，MDL"></a>4.2.2 元数据锁 meta data lock，MDL</h3><p>MDL加锁过程是系统自动控制，无需显式使用，在访问一张表的时候会自动加上。MDL锁主要作用是维护表元数据的数据一致性，在表上有活动事务时，不可以对元数据进行写入操作。<strong>为了避免DML和DDL冲突，保证读写的正确性。</strong></p>
+<p>在MySQL5.5中引入了MDL，当对一张表进行增删改查的时候，加MDL读锁(共享)；当对表结构进行变更操作的时候，加MDL写锁(排他)。</p>
+<p><img src="https://pic.ericzht.space/PicGo/image-20260410145508969.png" alt="image-20260410145508969"></p>
+<p>兼容：两个事务可以分别持有这两种锁，不会导致阻塞。</p>
+<h3 id="4-2-3-意向锁"><a href="#4-2-3-意向锁" class="headerlink" title="4.2.3 意向锁"></a>4.2.3 意向锁</h3><p>用于解决<strong>行锁</strong>和<strong>表锁</strong>的冲突问题。</p>
+<p>在DML执行时，加了行锁。另一个客户端想加表锁，就需要先检查每行数据是否加锁了，效率很低。于是引入<strong>意向锁</strong>来<strong>减少表锁的检查</strong>。</p>
+<p><img src="https://pic.ericzht.space/PicGo/image-20260410151334906.png" alt="image-20260410151334906"></p>
+<p>加入意向锁后，如果别的客户端要加表锁，检测到有意向锁后根据条件看要不要阻塞，等到意向锁解锁后再加锁。</p>
+<p>意向锁</p>
+<ol>
+<li><strong>意向共享锁(IS)</strong>: <code>select ... lock in share mode</code>（加上行锁，并自动添加意向共享锁）。与 表锁共享锁(read)兼容，与 表锁排他锁(write)互斥。</li>
+<li><strong>意向排他锁(IX)</strong>: 由insert、update、delete、select…for update添加 。与表锁共享锁(read)及排他锁(write)都互斥，意向锁之间不会互斥。</li>
+</ol>
+<h2 id="4-3-行锁"><a href="#4-3-行锁" class="headerlink" title="4.3 行锁"></a>4.3 行锁</h2><p>每次操作锁住对应的行数据。锁粒度最小，发生锁冲突的概率最低，并发度最高。应用在InnoDB存储引擎中。</p>
+<p>行锁是通过对索引上的<strong>索引项加锁</strong>来实现的，而不是对记录加锁。</p>
+<p><strong>分类：</strong></p>
+<p>1. </p>
+<ol>
+<li>行锁（Record lock）：锁定单个行记录的锁，防止其他事务对此行进行update和delete。在RC（读已提交）、RR（可重复读）隔离级别下都支持。</li>
+<li>间隙锁（Gap Lock）：锁定索引记录间隙（不含该记录），确保索引记录间隙不变，防止其他事务在这个间隙进行insert，产生幻读。在RR隔离级别下都支持。</li>
+<li>临键锁（Next-Key Lock）：行锁和间隙锁组合，同时锁住数据，并锁住数据前面的间隙Gap。在RR隔离级别下支持。</li>
+</ol>
+<p><img src="https://pic.ericzht.space/PicGo/image-20260410153429237.png" alt="image-20260410153429237"></p>
+<h3 id="4-3-1-行锁"><a href="#4-3-1-行锁" class="headerlink" title="4.3.1 行锁"></a>4.3.1 行锁</h3><ol>
+<li>共享锁S：允许一个事务去读一行，阻止其他事务获得相同数据集的排它锁。</li>
+<li>排他锁X：允许获取排他锁的事务更新数据，阻止其他事务获得相同数据集的共享锁和排他锁。</li>
+</ol>
+<p><img src="https://pic.ericzht.space/PicGo/image-20260410153622821.png" alt="image-20260410153622821"></p>
+<p>默认情况下，InnoDB在 REPEATABLE READ事务隔离级别运行，InnoDB使用 next-key 锁进行搜索和索引扫描，以防止幻读。</p>
+<ul>
+<li>针对唯一索引进行检索时，对已存在的记录进行等值匹配时，将会自动优化为行锁。</li>
+<li>InnoDB的行锁是针对于索引加的锁，不通过索引条件检索数据，那么InnoDB将对表中的所有记录加锁，此时 就会升级为表锁。</li>
+</ul>
+<h3 id="4-3-2-间隙锁-临键锁"><a href="#4-3-2-间隙锁-临键锁" class="headerlink" title="4.3.2 间隙锁&#x2F;临键锁"></a>4.3.2 间隙锁&#x2F;临键锁</h3><p>默认情况下，InnoDB在 REPEATABLE READ事务隔离级别运行，InnoDB使用 next-key 锁进行搜索和索引扫描，以防止幻读。</p>
+<ul>
+<li><p>索引上的等值查询(唯一索引)，给不存在的记录加锁时, 优化为间隙锁 。</p>
+</li>
+<li><p>索引上的等值查询(普通索引)，向右遍历时最后一个值不满足查询需求时，next-keylock 退化为间隙锁。</p>
+</li>
+<li><p>索引上的范围查询(唯一索引)，会访问到不满足条件的第一个值为止。</p>
+</li>
+</ul>
+<p>间隙锁唯一目的是<strong>防止其他事务插入间隙</strong>。间隙锁可以共存，一个事务采用的间隙锁不会阻止另一个事务在同一间隙上采用间隙锁。</p>
+<h1 id="五、日志"><a href="#五、日志" class="headerlink" title="五、日志"></a>五、日志</h1><h2 id="5-1-错误日志"><a href="#5-1-错误日志" class="headerlink" title="5.1 错误日志"></a>5.1 错误日志</h2><p>记录了当mysqld（服务端程序）启动和停止时，以及服务器再运行过程中发生任何严重错误时的相关信息。当数据库<strong>出现任何故障</strong>导致无法正常使用时，建议首先查看此日志。</p>
+<p>该日志是默认开启的，默认存放目录 &#x2F;var&#x2F;log&#x2F;，默认的日志文件名为 mysqld.log</p>
+<p>查看日志位置：</p>
+<p><code>show variables like &#39;%log_error%&#39;;</code></p>
+<p>linux命令：<code>tail -50 /var/log/mysqld.log</code>查看尾部的50行</p>
+<h2 id="5-2-二进制日志"><a href="#5-2-二进制日志" class="headerlink" title="5.2 二进制日志"></a>5.2 二进制日志</h2><p>二进制日志（BINLOG）记录了所有的 DDL（数据定义语言）语句和 DML（数据操纵语言）语句，但不包括数据查询（SELECT、SHOW）语句。</p>
+<p>作用：①. 灾难时的数据恢复；②. MySQL的主从复制。在MySQL8版本中，默认二进制日志是开启着的，涉及到的参数如下：</p>
+<p><code>show variables like &#39;%log_bin%&#39;;</code></p>
+<h3 id="参数说明"><a href="#参数说明" class="headerlink" title="参数说明"></a><strong>参数说明</strong></h3><ul>
+<li><p><code>log_bin_basename</code>：当前数据库服务器的binlog日志的基础名称(前缀)，具体的binlog文件名需要再该basename的基础上加上编号(编号从000001开始)。</p>
+</li>
+<li><p><code>log_bin_index</code>：binlog的索引文件，里面记录了当前服务器关联的binlog文件有哪些。</p>
+</li>
+</ul>
+<h3 id="日志格式"><a href="#日志格式" class="headerlink" title="日志格式"></a><strong>日志格式</strong></h3><p><img src="https://pic.ericzht.space/PicGo/image-20260410200545216.png" alt="image-20260410200545216"></p>
+<p>在 <code>/etc/my.cnf</code> 文件中添加binlog_format&#x3D;STATEMENT就可以修改其日志格式。</p>
+<h3 id="日志查看"><a href="#日志查看" class="headerlink" title="日志查看"></a><strong>日志查看</strong></h3><p><img src="https://pic.ericzht.space/PicGo/image-20260410200744477.png" alt="image-20260410200744477"></p>
+<h3 id="日志删除"><a href="#日志删除" class="headerlink" title="日志删除"></a>日志删除</h3><p>对于比较繁忙的业务系统，每天生成的binlog数据巨大，如果长时间不清除，将会占用大量磁盘空间。可以通过以下几种方式清理日志：</p>
+<p><img src="https://pic.ericzht.space/PicGo/image-20260410201529349.png" alt="image-20260410201529349"></p>
+<p>配置日志的过期时间，过期会自动删除。如需修改在配置文件中添加这个参数就可以了。（my.cnf)</p>
+<p>show variables like ‘%binlog_expire_logs_seconds%’;</p>
+<h2 id="5-3-查询日志"><a href="#5-3-查询日志" class="headerlink" title="5.3 查询日志"></a>5.3 查询日志</h2><p>查询日志中记录了客户端的所有操作语句，而二进制日志不包含查询数据的SQL语句。查询日志是<strong>默认关闭</strong>的，需要手动在<code>/etc/my.cnf</code>文件中设置</p>
+<p><img src="https://pic.ericzht.space/PicGo/image-20260410202318808.png" alt="image-20260410202318808"></p>
+<h2 id="5-4-慢查询日志"><a href="#5-4-慢查询日志" class="headerlink" title="5.4 慢查询日志"></a>5.4 慢查询日志</h2><p><img src="https://pic.ericzht.space/PicGo/image-20260410202845872.png" alt="image-20260410202845872"></p>
+<p>默认情况下，不会记录管理语句（修改、管理、维护数据库的命令），也不会记录不使用索引进行查找的查询。可以使用log_slow_admin_statements和 更改此行为 log_queries_not_using_indexes，如下所述。</p>
+<p><img src="https://pic.ericzht.space/PicGo/image-20260410202909758.png" alt="image-20260410202909758"></p>
+<h1 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h1><h2 id="Linux启动Mysql服务"><a href="#Linux启动Mysql服务" class="headerlink" title="Linux启动Mysql服务"></a>Linux启动Mysql服务</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start mysqld</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart mysqld</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop mysqld</span><br></pre></td></tr></table></figure>
+
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Mysql/">Mysql</a></div><div class="post-share"><div class="social-share" data-image="/image/icon.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/04/05/javaSE/Redis/" title="Redis"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">Redis</div></div><div class="info-2"><div class="info-item-1">一、缓存穿透缓存穿透是指客户端请求的数据在缓存中和数据库中都不存在，这样缓存永远不会生效，这些请求都会打到数据库。 有些人可能在短时间内恶意发送大量这样的请求，导致数据库崩溃。 常见解决方案：  1、缓存空对象优点：实现简单，维护方便 缺点：1、额外的内存消耗  2、可能造成短期的不一致 2、布隆过滤优点：内存占用较少，没有多余key 缺点：1、实现复杂 ...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/image/icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">eric_zht</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">31</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/erichtz"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%BA%8B%E5%8A%A1"><span class="toc-text">一、事务</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-%E7%AE%80%E4%BB%8B"><span class="toc-text">1.1 简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-%E4%BA%8B%E5%8A%A1%E6%93%8D%E4%BD%9C"><span class="toc-text">1.2 事务操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B-%E8%AE%BE%E7%BD%AE%E4%BA%8B%E5%8A%A1%E6%8F%90%E4%BA%A4%E6%96%B9%E5%BC%8F"><span class="toc-text">查看&#x2F;设置事务提交方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E4%BA%A4%E4%BA%8B%E5%8A%A1"><span class="toc-text">提交事务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9E%E6%BB%9A%E4%BA%8B%E5%8A%A1"><span class="toc-text">回滚事务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E5%90%AF%E4%BA%8B%E5%8A%A1"><span class="toc-text">开启事务</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-ACID"><span class="toc-text">1.3 ACID</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-4-%E5%B9%B6%E5%8F%91%E4%BA%8B%E5%8A%A1%E9%97%AE%E9%A2%98"><span class="toc-text">1.4 并发事务问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-5-%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="toc-text">1.5 事务隔离级别</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E"><span class="toc-text">二、存储引擎</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-%E4%BB%8B%E7%BB%8D"><span class="toc-text">2.1 介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E7%89%B9%E7%82%B9"><span class="toc-text">2.2 存储引擎特点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-1-InnoDB"><span class="toc-text">2.2.1 InnoDB</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%89%B9%E7%82%B9"><span class="toc-text">特点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6"><span class="toc-text">文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%BB%E8%BE%91%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84"><span class="toc-text">逻辑存储结构</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-2-MyISAM"><span class="toc-text">2.2.2 MyISAM</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D-1"><span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%89%B9%E7%82%B9-1"><span class="toc-text">特点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6-1"><span class="toc-text">文件</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-3-Memory"><span class="toc-text">2.2.3 Memory</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D-2"><span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%89%B9%E7%82%B9-2"><span class="toc-text">特点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6-2"><span class="toc-text">文件</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-3-%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E7%9A%84%E9%80%89%E6%8B%A9"><span class="toc-text">2.3 存储引擎的选择</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E7%B4%A2%E5%BC%95"><span class="toc-text">三、索引</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-%E7%B4%A2%E5%BC%95%E6%A6%82%E8%BF%B0"><span class="toc-text">3.1 索引概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-%E7%B4%A2%E5%BC%95%E7%BB%93%E6%9E%84"><span class="toc-text">3.2 索引结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-3-B-Tree"><span class="toc-text">3.3 B-Tree</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-4-B-Tree"><span class="toc-text">3.4 B+Tree</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-5-Hash"><span class="toc-text">3.5 Hash</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88InnoDB%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E9%80%89%E6%8B%A9%E4%BD%BF%E7%94%A8B-tree%E7%B4%A2%E5%BC%95%E7%BB%93%E6%9E%84"><span class="toc-text">为什么InnoDB存储引擎选择使用B+tree索引结构?</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-6-%E7%B4%A2%E5%BC%95%E5%88%86%E7%B1%BB"><span class="toc-text">3.6 索引分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-7-%E7%B4%A2%E5%BC%95%E8%AF%AD%E6%B3%95"><span class="toc-text">3.7 索引语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-8-%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90"><span class="toc-text">3.8 性能分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-8-1-SQL%E6%89%A7%E8%A1%8C%E9%A2%91%E7%8E%87"><span class="toc-text">3.8.1 SQL执行频率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-8-2-%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97"><span class="toc-text">3.8.2 慢查询日志</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-8-3-profile%E8%AF%A6%E6%83%85%EF%BC%88%E8%80%97%E6%97%B6%E8%AF%A6%E6%83%85%EF%BC%89"><span class="toc-text">3.8.3 profile详情（耗时详情）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-8-4-explain%E6%89%A7%E8%A1%8C%E8%AE%A1%E5%88%92"><span class="toc-text">3.8.4 explain执行计划</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-9-%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88%E6%83%85%E5%86%B5"><span class="toc-text">3.9 索引失效情况</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E5%B7%A6%E5%89%8D%E7%BC%80%E6%B3%95%E5%88%99"><span class="toc-text">最左前缀法则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8C%83%E5%9B%B4%E6%9F%A5%E8%AF%A2"><span class="toc-text">范围查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E5%88%97%E8%BF%90%E7%AE%97"><span class="toc-text">索引列运算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E7%B3%8A%E6%9F%A5%E8%AF%A2"><span class="toc-text">模糊查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#or%E8%BF%9E%E6%8E%A5%E7%9A%84%E6%9D%A1%E4%BB%B6"><span class="toc-text">or连接的条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%88%86%E5%B8%83%E5%BD%B1%E5%93%8D"><span class="toc-text">数据分布影响</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-10-SQL%E6%8F%90%E7%A4%BA"><span class="toc-text">3.10 SQL提示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-11-%E8%A6%86%E7%9B%96%E7%B4%A2%E5%BC%95"><span class="toc-text">3.11 覆盖索引</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-12-%E5%89%8D%E7%BC%80%E7%B4%A2%E5%BC%95"><span class="toc-text">3.12 前缀索引</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A1%AE%E5%AE%9A%E5%89%8D%E7%BC%80%E9%95%BF%E5%BA%A6"><span class="toc-text">确定前缀长度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%81%E7%A8%8B"><span class="toc-text">流程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-13-%E5%8D%95%E5%88%97%E7%B4%A2%E5%BC%95-%E4%B8%8E-%E8%81%94%E5%90%88%E7%B4%A2%E5%BC%95"><span class="toc-text">3.13 单列索引 与 联合索引</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-14-%E7%B4%A2%E5%BC%95%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99"><span class="toc-text">3.14 索引设计原则</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E9%94%81"><span class="toc-text">四、锁</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#4-1-%E5%85%A8%E5%B1%80%E9%94%81"><span class="toc-text">4.1 全局锁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-2-%E8%A1%A8%E7%BA%A7%E9%94%81"><span class="toc-text">4.2 表级锁</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-1-%E8%A1%A8%E9%94%81"><span class="toc-text">4.2.1 表锁</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%BB%E9%94%81"><span class="toc-text">读锁</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%99%E9%94%81"><span class="toc-text">写锁</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-2-%E5%85%83%E6%95%B0%E6%8D%AE%E9%94%81-meta-data-lock%EF%BC%8CMDL"><span class="toc-text">4.2.2 元数据锁 meta data lock，MDL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-3-%E6%84%8F%E5%90%91%E9%94%81"><span class="toc-text">4.2.3 意向锁</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-3-%E8%A1%8C%E9%94%81"><span class="toc-text">4.3 行锁</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-1-%E8%A1%8C%E9%94%81"><span class="toc-text">4.3.1 行锁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-2-%E9%97%B4%E9%9A%99%E9%94%81-%E4%B8%B4%E9%94%AE%E9%94%81"><span class="toc-text">4.3.2 间隙锁&#x2F;临键锁</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%97%A5%E5%BF%97"><span class="toc-text">五、日志</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#5-1-%E9%94%99%E8%AF%AF%E6%97%A5%E5%BF%97"><span class="toc-text">5.1 错误日志</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-2-%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%97%A5%E5%BF%97"><span class="toc-text">5.2 二进制日志</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E"><span class="toc-text">参数说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A5%E5%BF%97%E6%A0%BC%E5%BC%8F"><span class="toc-text">日志格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A5%E5%BF%97%E6%9F%A5%E7%9C%8B"><span class="toc-text">日志查看</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A5%E5%BF%97%E5%88%A0%E9%99%A4"><span class="toc-text">日志删除</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-3-%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97"><span class="toc-text">5.3 查询日志</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-4-%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97"><span class="toc-text">5.4 慢查询日志</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%A1%A5%E5%85%85"><span class="toc-text">补充</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux%E5%90%AF%E5%8A%A8Mysql%E6%9C%8D%E5%8A%A1"><span class="toc-text">Linux启动Mysql服务</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/05/javaSE/Mysql/" title="Mysql">Mysql</a><time datetime="2026-04-04T16:00:00.000Z" title="发表于 2026-04-05 00:00:00">2026-04-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/05/javaSE/Redis/" title="Redis">Redis</a><time datetime="2026-04-04T16:00:00.000Z" title="发表于 2026-04-05 00:00:00">2026-04-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/05/javaSE/SSM%20%E6%95%B4%E5%90%88/" title="SSM 整合、 Spring">SSM 整合、 Spring</a><time datetime="2026-04-04T16:00:00.000Z" title="发表于 2026-04-05 00:00:00">2026-04-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/30/javaSE/JUC/" title="JUC">JUC</a><time datetime="2026-03-29T16:00:00.000Z" title="发表于 2026-03-30 00:00:00">2026-03-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/25/javaSE/JVM/" title="JVM">JVM</a><time datetime="2026-03-24T16:00:00.000Z" title="发表于 2026-03-25 00:00:00">2026-03-25</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(https://pic.imgdb.cn/item/6741310cd29ded1a8c7a7799.jpg);"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2026 By eric_zht</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
